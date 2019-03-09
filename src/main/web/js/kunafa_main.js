@@ -6,12 +6,12 @@ if (typeof kunafa === 'undefined') {
 }
 var kunafa_main = function (_, Kotlin, $module$kunafa) {
   'use strict';
-  var Unit = Kotlin.kotlin.Unit;
   var get_px = $module$kunafa.com.narbase.kunafa.core.dimensions.get_px_rcaex3$;
   var set_borderRadius = $module$kunafa.com.narbase.kunafa.core.css.set_borderRadius_la1i9z$;
   var set_border = $module$kunafa.com.narbase.kunafa.core.css.set_border_la1i9z$;
   var set_margin = $module$kunafa.com.narbase.kunafa.core.css.set_margin_la1i9z$;
   var set_padding = $module$kunafa.com.narbase.kunafa.core.css.set_padding_la1i9z$;
+  var Unit = Kotlin.kotlin.Unit;
   var textView = $module$kunafa.com.narbase.kunafa.core.components.textView_k17fs7$;
   var set_width = $module$kunafa.com.narbase.kunafa.core.css.set_width_c3qti6$;
   var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
@@ -20,10 +20,6 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var verticalLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalLayout_te8a6c$;
   var page = $module$kunafa.com.narbase.kunafa.core.components.page_6bmerh$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
-  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
-  var startsWith = Kotlin.kotlin.text.startsWith_7epoxm$;
-  var Component = $module$kunafa.com.narbase.kunafa.core.components.Component;
   var a = $module$kunafa.com.narbase.kunafa.core.components.a_i4874s$;
   var Alignment = $module$kunafa.com.narbase.kunafa.core.css.Alignment;
   var set_alignItems = $module$kunafa.com.narbase.kunafa.core.css.set_alignItems_68dtfh$;
@@ -31,13 +27,16 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var set_justifyContent = $module$kunafa.com.narbase.kunafa.core.css.set_justifyContent_c3ey27$;
   var Color = $module$kunafa.com.narbase.kunafa.core.drawable.Color;
   var set_color = $module$kunafa.com.narbase.kunafa.core.css.set_color_ntmvhs$;
+  var Component = $module$kunafa.com.narbase.kunafa.core.components.Component;
   var get_matchParent = $module$kunafa.com.narbase.kunafa.core.dimensions.dependent.get_matchParent_kn5s8$;
   var set_height = $module$kunafa.com.narbase.kunafa.core.css.set_height_c3qti6$;
   var Observable = $module$kunafa.com.narbase.kunafa.core.lifecycle.Observable;
   var equals = Kotlin.equals;
   var textInput = $module$kunafa.com.narbase.kunafa.core.components.textInput_b3mkdq$;
-  getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
-  getComponent$ObjectLiteral.prototype.constructor = getComponent$ObjectLiteral;
+  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
+  var startsWith = Kotlin.kotlin.text.startsWith_7epoxm$;
+  var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
+  var Kind_OBJECT = Kotlin.Kind.OBJECT;
   DashboardPage.prototype = Object.create(Component.prototype);
   DashboardPage.prototype.constructor = DashboardPage;
   PageComponent.prototype = Object.create(Component.prototype);
@@ -46,18 +45,10 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   LoginComponent.prototype.constructor = LoginComponent;
   TextWithLabelComponent.prototype = Object.create(Component.prototype);
   TextWithLabelComponent.prototype.constructor = TextWithLabelComponent;
-  function main$lambda(it) {
-    var tmp$;
-    tmp$ = routes.iterator();
-    while (tmp$.hasNext()) {
-      var element = tmp$.next();
-      element.update();
-    }
-    return Unit;
-  }
+  getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
+  getComponent$ObjectLiteral.prototype.constructor = getComponent$ObjectLiteral;
   function main(args) {
     (new App()).setup();
-    window.onpopstate = main$lambda;
   }
   function App() {
   }
@@ -106,7 +97,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda$lambda(it) {
-    navigateTo('/movies');
+    Router_getInstance().navigateTo_61zpoe$('/movies');
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda_2($receiver) {
@@ -135,7 +126,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0(it) {
-    navigateTo('/games');
+    Router_getInstance().navigateTo_61zpoe$('/games');
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda_5($receiver) {
@@ -169,7 +160,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   function App$setup$lambda$lambda$lambda$lambda$lambda_8(closure$comedyRoute) {
     return function (it) {
       console.log('');
-      navigateTo(closure$comedyRoute.path);
+      Router_getInstance().navigateTo_61zpoe$(closure$comedyRoute.path);
       return Unit;
     };
   }
@@ -206,72 +197,10 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'App',
     interfaces: []
   };
-  function navigateTo(path) {
-    window.history.pushState(null, '', '/' + trimStart(path, Kotlin.charArrayOf(47)));
-    var tmp$;
-    tmp$ = routes.iterator();
-    while (tmp$.hasNext()) {
-      var element = tmp$.next();
-      element.update();
-    }
-  }
-  var currentPath;
-  function route($receiver, path, block) {
-    return route_0($receiver, path, getComponent(block));
-  }
-  function route$lambda($receiver) {
-    $receiver.isVisible = false;
-    return Unit;
-  }
-  function route_0($receiver, path, component) {
-    var oldPath = currentPath;
-    currentPath = trim(currentPath + path, Kotlin.charArrayOf(47));
-    var reference = view($receiver, void 0, route$lambda);
-    var route = new Route(currentPath, component, $receiver, reference);
-    routes.add_11rb$(route);
-    route.update();
-    currentPath = oldPath;
-    return route;
-  }
-  function Route(path, component, parent, referenceView) {
-    this.path = path;
-    this.component_0 = component;
-    this.parent_0 = parent;
-    this.referenceView_0 = referenceView;
-  }
-  Route.prototype.update = function () {
-    var tmp$, tmp$_0;
-    if (startsWith(trim(window.location.pathname, Kotlin.charArrayOf(47)), this.path)) {
-      (tmp$ = this.parent_0) != null ? tmp$.mountAfter_6ftq4c$(this.component_0, this.referenceView_0) : null;
-    }
-     else {
-      (tmp$_0 = this.parent_0) != null ? tmp$_0.unMount_7bau7r$(this.component_0) : null;
-    }
-  };
-  Route.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Route',
-    interfaces: []
-  };
-  var routes;
-  function getComponent$ObjectLiteral(closure$block) {
-    this.closure$block = closure$block;
-    Component.call(this);
-  }
-  getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
-    return this.closure$block($receiver);
-  };
-  getComponent$ObjectLiteral.$metadata$ = {
-    kind: Kind_CLASS,
-    interfaces: [Component]
-  };
-  function getComponent(block) {
-    return new getComponent$ObjectLiteral(block);
-  }
   function link$lambda$lambda(closure$path) {
     return function (it) {
       it.preventDefault();
-      navigateTo(closure$path);
+      Router_getInstance().navigateTo_61zpoe$(closure$path);
       return Unit;
     };
   }
@@ -547,29 +476,100 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'TextWithLabelComponent',
     interfaces: [Component]
   };
+  function Route(path, component, parent, referenceView) {
+    this.path = path;
+    this.component_0 = component;
+    this.parent_0 = parent;
+    this.referenceView_0 = referenceView;
+  }
+  Route.prototype.update = function () {
+    var tmp$, tmp$_0;
+    if (startsWith(trim(window.location.pathname, Kotlin.charArrayOf(47)), this.path)) {
+      (tmp$ = this.parent_0) != null ? tmp$.mountAfter_6ftq4c$(this.component_0, this.referenceView_0) : null;
+    }
+     else {
+      (tmp$_0 = this.parent_0) != null ? tmp$_0.unMount_7bau7r$(this.component_0) : null;
+    }
+  };
+  Route.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Route',
+    interfaces: []
+  };
+  function route($receiver, path, block) {
+    return route_0($receiver, path, getComponent(block));
+  }
+  function route$lambda($receiver) {
+    $receiver.isVisible = false;
+    return Unit;
+  }
+  function route_0($receiver, path, component) {
+    var oldPath = Router_getInstance().currentPath;
+    Router_getInstance().currentPath = trim(Router_getInstance().currentPath + path, Kotlin.charArrayOf(47));
+    var reference = view($receiver, void 0, route$lambda);
+    var route = new Route(Router_getInstance().currentPath, component, $receiver, reference);
+    Router_getInstance().add_20tn11$(route);
+    route.update();
+    Router_getInstance().currentPath = oldPath;
+    return route;
+  }
+  function getComponent$ObjectLiteral(closure$block) {
+    this.closure$block = closure$block;
+    Component.call(this);
+  }
+  getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
+    return this.closure$block($receiver);
+  };
+  getComponent$ObjectLiteral.$metadata$ = {
+    kind: Kind_CLASS,
+    interfaces: [Component]
+  };
+  function getComponent(block) {
+    return new getComponent$ObjectLiteral(block);
+  }
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  function Router() {
+    Router_instance = this;
+    window.onpopstate = Router_init$lambda;
+    this.currentPath = '/';
+    this.routes_0 = ArrayList_init();
+  }
+  Router.prototype.update_0 = function () {
+    var tmp$;
+    tmp$ = this.routes_0.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      element.update();
+    }
+  };
+  Router.prototype.add_20tn11$ = function (route) {
+    this.routes_0.add_11rb$(route);
+  };
+  Router.prototype.navigateTo_61zpoe$ = function (path) {
+    window.history.pushState(null, '', '/' + trimStart(path, Kotlin.charArrayOf(47)));
+    Router_getInstance().update_0();
+  };
+  function Router_init$lambda(it) {
+    Router_getInstance().update_0();
+    return Unit;
+  }
+  Router.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Router',
+    interfaces: []
+  };
+  var Router_instance = null;
+  function Router_getInstance() {
+    if (Router_instance === null) {
+      new Router();
+    }
+    return Router_instance;
+  }
   var package$com = _.com || (_.com = {});
   var package$narbase = package$com.narbase || (package$com.narbase = {});
   var package$kuntut = package$narbase.kuntut || (package$narbase.kuntut = {});
   package$kuntut.main_kand9s$ = main;
   package$kuntut.App = App;
-  package$kuntut.navigateTo_61zpoe$ = navigateTo;
-  Object.defineProperty(package$kuntut, 'currentPath', {
-    get: function () {
-      return currentPath;
-    },
-    set: function (value) {
-      currentPath = value;
-    }
-  });
-  package$kuntut.route_xjzb42$ = route;
-  package$kuntut.route_lrrxk0$ = route_0;
-  package$kuntut.Route = Route;
-  Object.defineProperty(package$kuntut, 'routes', {
-    get: function () {
-      return routes;
-    }
-  });
-  package$kuntut.getComponent_a3w1on$ = getComponent;
   package$kuntut.link_6xqxb6$ = link;
   package$kuntut.DashboardPage = DashboardPage;
   package$kuntut.PageComponent = PageComponent;
@@ -577,9 +577,13 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   package$kuntut.LoginPageViewController = LoginPageViewController;
   package$kuntut.LoginComponent = LoginComponent;
   package$kuntut.TextWithLabelComponent = TextWithLabelComponent;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  currentPath = '/';
-  routes = ArrayList_init();
+  package$kuntut.Route = Route;
+  package$kuntut.route_xjzb42$ = route;
+  package$kuntut.route_lrrxk0$ = route_0;
+  package$kuntut.getComponent_a3w1on$ = getComponent;
+  Object.defineProperty(package$kuntut, 'Router', {
+    get: Router_getInstance
+  });
   main([]);
   Kotlin.defineModule('kunafa_main', _);
   return _;

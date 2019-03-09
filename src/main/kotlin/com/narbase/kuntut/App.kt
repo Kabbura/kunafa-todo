@@ -12,13 +12,9 @@ package com.narbase.kuntut
 import com.narbase.kunafa.core.components.*
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.px
-import kotlin.browser.window
 
 fun main(args: Array<String>) {
     App().setup()
-    window.onpopstate = {
-        routes.forEach { route -> route.update() }
-    }
 }
 
 class App {
@@ -68,7 +64,7 @@ class App {
                         button {
                             text = "Go to movies"
                             onClick = {
-                                navigateTo("/movies")
+                                Router.navigateTo("/movies")
                             }
                         }
                     }
@@ -90,7 +86,7 @@ class App {
                         button {
                             text = "Go to games"
                             onClick = {
-                                navigateTo("/games")
+                                Router.navigateTo("/games")
                             }
                         }
 
@@ -116,7 +112,7 @@ class App {
 
                         comedyButton.onClick = {
                             console.log("")
-                            navigateTo(comedyRoute.path)
+                            Router.navigateTo(comedyRoute.path)
                         }
 
                     }
@@ -125,63 +121,16 @@ class App {
 //            mount(PageComponent(PageViewController()))
         }
     }
-
 }
 
-fun navigateTo(path: String) {
-    window.history.pushState(null, "", "/${path.trimStart('/')}")
-    routes.forEach { it.update() }
-}
-
-
-var currentPath = "/"
-fun View?.route(path: String, block: View?.() -> View): Route {
-    return route(path, getComponent(block))
-}
-
-fun View?.route(path: String, component: Component): Route {
-    val oldPath = currentPath
-    currentPath = "$currentPath$path".trim('/')
-
-    val reference = view { isVisible = false }
-    val route = Route(currentPath, component, this, reference)
-    routes.add(route)
-    route.update()
-    currentPath = oldPath
-    return route
-}
-
-class Route(
-    val path: String,
-    private val component: Component,
-    private val parent: View?,
-    private val referenceView: View
-) {
-
-    //    val children = mutableListOf<Route>()
-    fun update() {
-//        console.log("currentPath: $path, pathToMatch: $path, window: ${window.location.pathname}")
-        if (window.location.pathname.trim('/').startsWith(path)) {
-            parent?.mountAfter(component, referenceView)
-//            children.forEach { it.update() }
-        } else {
-            parent?.unMount(component)
-        }
-    }
-}
-
-val routes = mutableListOf<Route>()
-
-fun getComponent(block: View?.() -> View): Component = object : Component() {
-    override fun View?.getView() = block()
-}
 
 
 fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
     href = path
     onClick = {
         it.preventDefault()
-        navigateTo(path)
+        Router.navigateTo(path)
     }
     block?.invoke(this)
 }
+
