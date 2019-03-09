@@ -23,36 +23,29 @@ class App {
             id = "page"
 
             verticalLayout {
-                style {
-                    borderRadius = 4.px.toString()
-                    border = "1px solid #d4d4d4"
-                    margin = 8.px.toString()
-                    padding = 8.px.toString()
-                }
-
-                textView {
-                    text = "Root view matches /"
-                }
-
-                horizontalLayout {
-
-                    link("/movies") {
-                        text = "Go to movies"
+                verticalLayout {
+                    style {
+                        margin = 8.px.toString()
+                        padding = 8.px.toString()
                     }
-                    view {
-                        style {
-                            width = 20.px
-                        }
+                    link("/") {
+                        text = "Home"
                     }
-                    link("/games") {
-                        text = "Go to games"
-                    }
-                }
 
-                route("/games") {
+                    link("/about") {
+                        text = "About"
+                    }
+
+                    link("/topics") {
+                        text = "Topics"
+                    }
+
+
+                }
+                route("/", isExact = true) {
                     verticalLayout {
                         textView {
-                            text = "Games view matches /games"
+                            text = "Home"
                         }
                         style {
                             borderRadius = 4.px.toString()
@@ -60,18 +53,10 @@ class App {
                             margin = 8.px.toString()
                             padding = 8.px.toString()
                         }
-
-                        button {
-                            text = "Go to movies"
-                            onClick = {
-                                Router.navigateTo("/movies")
-                            }
-                        }
                     }
                 }
 
-                route("/movies") {
-
+                route("/about") {
                     verticalLayout {
                         style {
                             borderRadius = 4.px.toString()
@@ -80,22 +65,36 @@ class App {
                             padding = 8.px.toString()
                         }
                         textView {
-                            text = "Movies view matches /movies"
+                            text = "About"
 
                         }
-                        button {
-                            text = "Go to games"
-                            onClick = {
-                                Router.navigateTo("/games")
-                            }
+                    }
+                }
+
+                route("/topics") { meta ->
+                    verticalLayout {
+                        style {
+                            borderRadius = 4.px.toString()
+                            border = "1px solid #d4d4d4"
+                            margin = 8.px.toString()
+                            padding = 8.px.toString()
+                        }
+                        textView {
+                            text = "Topics"
+                        }
+                        link("${meta.url}/rendering") {
+                            text = "Rendering with React"
                         }
 
-                        val comedyButton = button {
-                            text = "Comedy"
+                        link("${meta.url}/components") {
+                            text = "Components"
                         }
 
-                        val comedyRoute = route("/comedy") {
+                        link("${meta.url}/props-v-state") {
+                            text = "Props v. State"
+                        }
 
+                        route("/:topic") { meta ->
                             verticalLayout {
                                 style {
                                     borderRadius = 4.px.toString()
@@ -103,25 +102,30 @@ class App {
                                     margin = 8.px.toString()
                                     padding = 8.px.toString()
                                 }
-                                textView {
-                                    text = "Comedy movies view matches /movies/comedy"
+                                val text = textView {
 
+                                }
+
+                                meta.params.observe { params ->
+                                    text.text = params?.getOrElse("topic") { "No value" } ?: "No value"
                                 }
                             }
                         }
+                        route("/", isExact = true) {
+                            textView {
+                                text = "Please select a topic"
+                            }
 
-                        comedyButton.onClick = {
-                            Router.navigateTo(comedyRoute.path)
                         }
 
                     }
                 }
             }
+
 //            mount(PageComponent(PageViewController()))
         }
     }
 }
-
 
 
 fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
