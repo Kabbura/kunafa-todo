@@ -17,22 +17,31 @@ import kotlin.browser.window
 class Route(
     val path: String,
     private val component: Component,
-    private val parent: View?,
+    private val parentRoute: Route?,
+    private val parentView: View?,
     private val referenceView: View
 ) {
 
-    //    val children = mutableListOf<Route>()
+    private val children = mutableListOf<Route>()
     fun update() {
 //        console.log("currentPath: $path, pathToMatch: $path, window: ${window.location.pathname}")
         if (window.location.pathname.trim('/').startsWith(path)) {
-            parent?.mountAfter(component, referenceView)
-//            children.forEach { it.update() }
+            Router.currentRoute = this
+            parentView?.mountAfter(component, referenceView)
+            children.forEach {
+//                console.log("of $path: ${it.path}")
+                it.update()
+            }
+            Router.currentRoute = parentRoute
         } else {
-            parent?.unMount(component)
+            parentView?.unMount(component)
         }
     }
-}
+    fun add(route: Route) {
+        children.add(route)
+    }
 
+}
 
 
 fun View?.route(path: String, block: View?.() -> View): Route {
@@ -42,10 +51,15 @@ fun View?.route(path: String, block: View?.() -> View): Route {
 fun View?.route(path: String, component: Component): Route {
     val oldPath = Router.currentPath
     Router.currentPath = "${Router.currentPath}$path".trim('/')
+    val parentRoute = Router.currentRoute
 
     val reference = view { isVisible = false }
-    val route = Route(Router.currentPath, component, this, reference)
-    Router.add(route)
+    val route = Route(Router.currentPath, component, parentRoute, this, reference)
+    if (parentRoute == null) {
+        Router.add(route)
+    } else {
+        parentRoute.add(route)
+    }
     route.update()
     Router.currentPath = oldPath
     return route

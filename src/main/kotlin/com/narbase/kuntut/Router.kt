@@ -18,10 +18,15 @@ object Router {
         }
     }
     var currentPath = "/"
+    var currentRoute: Route? = null
+
     private val routes = mutableListOf<Route>()
 
     private fun update() {
-        routes.forEach { route -> route.update() }
+        routes.forEach { route ->
+//            console.log("Router: ${route.path}")
+            route.update()
+        }
     }
 
     fun add(route: Route) {

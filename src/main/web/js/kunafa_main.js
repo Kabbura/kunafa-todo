@@ -159,7 +159,6 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda_8(closure$comedyRoute) {
     return function (it) {
-      console.log('');
       Router_getInstance().navigateTo_61zpoe$(closure$comedyRoute.path);
       return Unit;
     };
@@ -476,20 +475,34 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'TextWithLabelComponent',
     interfaces: [Component]
   };
-  function Route(path, component, parent, referenceView) {
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
+  function Route(path, component, parentRoute, parentView, referenceView) {
     this.path = path;
     this.component_0 = component;
-    this.parent_0 = parent;
+    this.parentRoute_0 = parentRoute;
+    this.parentView_0 = parentView;
     this.referenceView_0 = referenceView;
+    this.children_0 = ArrayList_init();
   }
   Route.prototype.update = function () {
     var tmp$, tmp$_0;
     if (startsWith(trim(window.location.pathname, Kotlin.charArrayOf(47)), this.path)) {
-      (tmp$ = this.parent_0) != null ? tmp$.mountAfter_6ftq4c$(this.component_0, this.referenceView_0) : null;
+      Router_getInstance().currentRoute = this;
+      (tmp$ = this.parentView_0) != null ? tmp$.mountAfter_6ftq4c$(this.component_0, this.referenceView_0) : null;
+      var tmp$_1;
+      tmp$_1 = this.children_0.iterator();
+      while (tmp$_1.hasNext()) {
+        var element = tmp$_1.next();
+        element.update();
+      }
+      Router_getInstance().currentRoute = this.parentRoute_0;
     }
      else {
-      (tmp$_0 = this.parent_0) != null ? tmp$_0.unMount_7bau7r$(this.component_0) : null;
+      (tmp$_0 = this.parentView_0) != null ? tmp$_0.unMount_7bau7r$(this.component_0) : null;
     }
+  };
+  Route.prototype.add_20tn11$ = function (route) {
+    this.children_0.add_11rb$(route);
   };
   Route.$metadata$ = {
     kind: Kind_CLASS,
@@ -506,9 +519,15 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   function route_0($receiver, path, component) {
     var oldPath = Router_getInstance().currentPath;
     Router_getInstance().currentPath = trim(Router_getInstance().currentPath + path, Kotlin.charArrayOf(47));
+    var parentRoute = Router_getInstance().currentRoute;
     var reference = view($receiver, void 0, route$lambda);
-    var route = new Route(Router_getInstance().currentPath, component, $receiver, reference);
-    Router_getInstance().add_20tn11$(route);
+    var route = new Route(Router_getInstance().currentPath, component, parentRoute, $receiver, reference);
+    if (parentRoute == null) {
+      Router_getInstance().add_20tn11$(route);
+    }
+     else {
+      parentRoute.add_20tn11$(route);
+    }
     route.update();
     Router_getInstance().currentPath = oldPath;
     return route;
@@ -527,11 +546,11 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   function getComponent(block) {
     return new getComponent$ObjectLiteral(block);
   }
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   function Router() {
     Router_instance = this;
     window.onpopstate = Router_init$lambda;
     this.currentPath = '/';
+    this.currentRoute = null;
     this.routes_0 = ArrayList_init();
   }
   Router.prototype.update_0 = function () {

@@ -111,7 +111,6 @@ class App {
                         }
 
                         comedyButton.onClick = {
-                            console.log("")
                             Router.navigateTo(comedyRoute.path)
                         }
 
