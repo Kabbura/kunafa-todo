@@ -17,7 +17,108 @@ fun main(args: Array<String>) {
     App().setup()
 }
 
-class App {
+class App() {
+    fun setup() {
+        page {
+            verticalLayout {
+                style {
+                    padding = 16.px.toString()
+                }
+                verticalLayout {
+                    link("/") {
+                        text = "Home"
+                    }
+                    link("/about") {
+                        text = "About"
+                    }
+                    link("/topics") {
+                        text = "Topics"
+                    }
+                }
+
+                route("/", isExact = true) {
+                    verticalLayout {
+                        style {
+                            borderRadius = 4.px.toString()
+                            border = "1px solid #d4d4d4"
+                            margin = 8.px.toString()
+                            padding = 8.px.toString()
+                        }
+
+                        textView {
+                            text = "Home"
+                        }
+                    }
+                }
+                route("/about") {
+                    verticalLayout {
+                        style {
+                            borderRadius = 4.px.toString()
+                            border = "1px solid #d4d4d4"
+                            margin = 8.px.toString()
+                            padding = 8.px.toString()
+                        }
+
+                        textView {
+                            text = "About"
+                        }
+                    }
+
+                }
+                route("/topics") {
+                    verticalLayout {
+                        style {
+                            borderRadius = 4.px.toString()
+                            border = "1px solid #d4d4d4"
+                            margin = 8.px.toString()
+                            padding = 8.px.toString()
+                        }
+
+                        textView {
+                            text = "Topics"
+                        }
+
+                        link("/rendering") {
+                            text = "Rendering with React"
+                        }
+                        link("/components") {
+                            text = "Components"
+                        }
+                        link("/props-v-state") {
+                            text = "Props v. State"
+                        }
+
+
+                        route("/", isExact = true) {
+                            textView {
+                                text = "Please select a topic"
+                            }
+                        }
+
+                        route("/:topicName") { meta ->
+
+                            val myTextView = textView {
+
+                            }
+
+                            meta.params.observe { params ->
+                                myTextView.text = params?.get("topicName") ?: "No value"
+                            }
+                            myTextView
+                        }
+
+
+
+                    }
+
+                }
+
+            }
+        }
+    }
+}
+
+class App2 {
     fun setup() {
         page {
             id = "page"
@@ -82,15 +183,15 @@ class App {
                         textView {
                             text = "Topics"
                         }
-                        link("${meta.url}/rendering") {
+                        link("/rendering") {
                             text = "Rendering with React"
                         }
 
-                        link("${meta.url}/components") {
+                        link("/components") {
                             text = "Components"
                         }
 
-                        link("${meta.url}/props-v-state") {
+                        link("/props-v-state") {
                             text = "Props v. State"
                         }
 
@@ -128,12 +229,4 @@ class App {
 }
 
 
-fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
-    href = path
-    onClick = {
-        it.preventDefault()
-        Router.navigateTo(path)
-    }
-    block?.invoke(this)
-}
 

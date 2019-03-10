@@ -2,9 +2,7 @@
 
 package com.narbase.kuntut
 
-import com.narbase.kunafa.core.components.Component
-import com.narbase.kunafa.core.components.View
-import com.narbase.kunafa.core.components.view
+import com.narbase.kunafa.core.components.*
 import com.narbase.kunafa.core.lifecycle.Observable
 import kotlin.browser.window
 
@@ -52,12 +50,12 @@ class Route(
     private fun updatePathParams(windowSegments: List<RouteSegment>) {
         val params = mutableMapOf<String, String>()
         segments
-            .forEachIndexed {  index, segment ->
+            .forEachIndexed { index, segment ->
                 if ((segment is ParameterSegment).not())
                     return@forEachIndexed
                 val s = segment as? ParameterSegment
                 console.log("ParameterSegment: ${s?.text}")
-                val windowSegment =  windowSegments[index].text
+                val windowSegment = windowSegments[index].text
                 params[s?.text ?: ""] = windowSegment
             }
         if (params.isNotEmpty()) {
@@ -82,12 +80,18 @@ class Route(
     }
 }
 
-fun View?.route(path: String, isExact: Boolean = false, block: View?.(meta: RouteMeta) -> View): Route {
-
-    // Valid path: /path/to/something or /
-    // Slash at the beginning only not the end
+fun View?.route(
+    path: String,
+    isExact: Boolean = false,
+    isAbsolute: Boolean = false,
+    block: View?.(meta: RouteMeta) -> View
+): Route {
     val oldPath = Router.currentPath
-    Router.currentPath = "/${Router.currentPath.trim('/')}/${path.trim('/')}"
+
+
+    val routePath = getPath(isAbsolute, path)
+
+    Router.currentPath = routePath
     val routeSegments = getSegments(Router.currentPath)
     val parentRoute = Router.currentRoute
 
@@ -103,6 +107,14 @@ fun View?.route(path: String, isExact: Boolean = false, block: View?.(meta: Rout
     route.update()
     Router.currentPath = oldPath
     return route
+}
+
+ fun getPath(isAbsolute: Boolean, path: String): String {
+    val trimmedCurrentPath = Router.currentPath.trim('/')
+    return when {
+        isAbsolute || trimmedCurrentPath.isBlank() -> "/${path.trim('/')}"
+        else -> "/$trimmedCurrentPath/${path.trim('/')}"
+    }
 }
 
 fun getSegments(currentPath: String): List<RouteSegment> {
@@ -135,3 +147,13 @@ class RouteMeta(
     val url: String,
     val params: Observable<Map<String, String>>
 )
+
+fun View?.link(path: String, isAbsolute: Boolean = false, block: (Anchor.() -> Unit)? = null) = a {
+    val completePath = getPath(isAbsolute, path)
+    href = completePath
+    onClick = {
+        it.preventDefault()
+        Router.navigateTo(completePath)
+    }
+    block?.invoke(this)
+}

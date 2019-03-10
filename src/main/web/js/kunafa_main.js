@@ -7,16 +7,15 @@ if (typeof kunafa === 'undefined') {
 var kunafa_main = function (_, Kotlin, $module$kunafa) {
   'use strict';
   var get_px = $module$kunafa.com.narbase.kunafa.core.dimensions.get_px_rcaex3$;
-  var set_margin = $module$kunafa.com.narbase.kunafa.core.css.set_margin_la1i9z$;
   var set_padding = $module$kunafa.com.narbase.kunafa.core.css.set_padding_la1i9z$;
   var Unit = Kotlin.kotlin.Unit;
   var verticalLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalLayout_te8a6c$;
-  var textView = $module$kunafa.com.narbase.kunafa.core.components.textView_k17fs7$;
   var set_borderRadius = $module$kunafa.com.narbase.kunafa.core.css.set_borderRadius_la1i9z$;
   var set_border = $module$kunafa.com.narbase.kunafa.core.css.set_border_la1i9z$;
+  var set_margin = $module$kunafa.com.narbase.kunafa.core.css.set_margin_la1i9z$;
+  var textView = $module$kunafa.com.narbase.kunafa.core.components.textView_k17fs7$;
   var page = $module$kunafa.com.narbase.kunafa.core.components.page_6bmerh$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var a = $module$kunafa.com.narbase.kunafa.core.components.a_i4874s$;
   var Alignment = $module$kunafa.com.narbase.kunafa.core.css.Alignment;
   var set_alignItems = $module$kunafa.com.narbase.kunafa.core.css.set_alignItems_68dtfh$;
   var JustifyContent = $module$kunafa.com.narbase.kunafa.core.css.JustifyContent;
@@ -35,10 +34,12 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var joinToString = Kotlin.kotlin.collections.joinToString_fmv235$;
   var toString = Kotlin.toString;
   var getOrNull = Kotlin.kotlin.collections.getOrNull_yzln2o$;
-  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
   var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
+  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
+  var isBlank = Kotlin.kotlin.text.isBlank_gw00vp$;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var startsWith = Kotlin.kotlin.text.startsWith_7epoxm$;
+  var a = $module$kunafa.com.narbase.kunafa.core.components.a_i4874s$;
   var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   DashboardPage.prototype = Object.create(Component.prototype);
@@ -58,48 +59,46 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   }
   function App() {
   }
+  function App$setup$lambda$lambda$lambda($receiver) {
+    set_padding($receiver, get_px(16).toString());
+    return Unit;
+  }
   function App$setup$lambda$lambda$lambda$lambda($receiver) {
-    set_margin($receiver, get_px(8).toString());
-    set_padding($receiver, get_px(8).toString());
+    $receiver.text = 'Home';
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda_0($receiver) {
-    $receiver.text = 'Home';
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda_1($receiver) {
     $receiver.text = 'About';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda_2($receiver) {
+  function App$setup$lambda$lambda$lambda$lambda_1($receiver) {
     $receiver.text = 'Topics';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda($receiver) {
-    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda);
-    link($receiver, '/', App$setup$lambda$lambda$lambda$lambda_0);
-    link($receiver, '/about', App$setup$lambda$lambda$lambda$lambda_1);
-    link($receiver, '/topics', App$setup$lambda$lambda$lambda$lambda_2);
+  function App$setup$lambda$lambda$lambda_0($receiver) {
+    link($receiver, '/', void 0, App$setup$lambda$lambda$lambda$lambda);
+    link($receiver, '/about', void 0, App$setup$lambda$lambda$lambda$lambda_0);
+    link($receiver, '/topics', void 0, App$setup$lambda$lambda$lambda$lambda_1);
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda($receiver) {
-    $receiver.text = 'Home';
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_0($receiver) {
     set_borderRadius($receiver, get_px(4).toString());
     set_border($receiver, '1px solid #d4d4d4');
     set_margin($receiver, get_px(8).toString());
     set_padding($receiver, get_px(8).toString());
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda_3($receiver) {
-    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda);
-    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_0);
+  function App$setup$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.text = 'Home';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda_0($receiver, it) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_3);
+  function App$setup$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda);
+    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_0);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_1($receiver, it) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_2);
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda_1($receiver) {
     set_borderRadius($receiver, get_px(4).toString());
@@ -112,13 +111,13 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     $receiver.text = 'About';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda_4($receiver) {
+  function App$setup$lambda$lambda$lambda$lambda_3($receiver) {
     $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_1);
     textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_2);
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda_1($receiver, it) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_4);
+  function App$setup$lambda$lambda$lambda_2($receiver, it) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_3);
   }
   function App$setup$lambda$lambda$lambda$lambda$lambda_3($receiver) {
     set_borderRadius($receiver, get_px(4).toString());
@@ -143,17 +142,159 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     $receiver.text = 'Props v. State';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+    $receiver.text = 'Please select a topic';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_8($receiver, it) {
+    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda);
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$myTextView) {
+    return function (params) {
+      var tmp$;
+      closure$myTextView.text = (tmp$ = params != null ? params.get_11rb$('topicName') : null) != null ? tmp$ : 'No value';
+      return Unit;
+    };
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_9($receiver, meta) {
+    var myTextView = textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0);
+    meta.params.observe_qlkmfe$(App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1(myTextView));
+    return myTextView;
+  }
+  function App$setup$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_3);
+    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_4);
+    link($receiver, '/rendering', void 0, App$setup$lambda$lambda$lambda$lambda$lambda_5);
+    link($receiver, '/components', void 0, App$setup$lambda$lambda$lambda$lambda$lambda_6);
+    link($receiver, '/props-v-state', void 0, App$setup$lambda$lambda$lambda$lambda$lambda_7);
+    route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_8);
+    route($receiver, '/:topicName', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_9);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_3($receiver, it) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_4);
+  }
+  function App$setup$lambda$lambda($receiver) {
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda);
+    verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_0);
+    route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda_1);
+    route($receiver, '/about', void 0, void 0, App$setup$lambda$lambda$lambda_2);
+    route($receiver, '/topics', void 0, void 0, App$setup$lambda$lambda$lambda_3);
+    return Unit;
+  }
+  function App$setup$lambda($receiver) {
+    verticalLayout($receiver, void 0, App$setup$lambda$lambda);
+    return Unit;
+  }
+  App.prototype.setup = function () {
+    page(void 0, App$setup$lambda);
+  };
+  App.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'App',
+    interfaces: []
+  };
+  function App2() {
+  }
+  function App2$setup$lambda$lambda$lambda$lambda($receiver) {
+    set_margin($receiver, get_px(8).toString());
+    set_padding($receiver, get_px(8).toString());
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.text = 'Home';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda_1($receiver) {
+    $receiver.text = 'About';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.text = 'Topics';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda($receiver) {
+    $receiver.style_cjs1gm$(App2$setup$lambda$lambda$lambda$lambda);
+    link($receiver, '/', void 0, App2$setup$lambda$lambda$lambda$lambda_0);
+    link($receiver, '/about', void 0, App2$setup$lambda$lambda$lambda$lambda_1);
+    link($receiver, '/topics', void 0, App2$setup$lambda$lambda$lambda$lambda_2);
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda($receiver) {
+    $receiver.text = 'Home';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_0($receiver) {
     set_borderRadius($receiver, get_px(4).toString());
     set_border($receiver, '1px solid #d4d4d4');
     set_margin($receiver, get_px(8).toString());
     set_padding($receiver, get_px(8).toString());
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+  function App2$setup$lambda$lambda$lambda$lambda_3($receiver) {
+    textView($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda);
+    $receiver.style_cjs1gm$(App2$setup$lambda$lambda$lambda$lambda$lambda_0);
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$text) {
+  function App2$setup$lambda$lambda$lambda_0($receiver, it) {
+    return verticalLayout($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda_3);
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_1($receiver) {
+    set_borderRadius($receiver, get_px(4).toString());
+    set_border($receiver, '1px solid #d4d4d4');
+    set_margin($receiver, get_px(8).toString());
+    set_padding($receiver, get_px(8).toString());
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.text = 'About';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.style_cjs1gm$(App2$setup$lambda$lambda$lambda$lambda$lambda_1);
+    textView($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_2);
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda_1($receiver, it) {
+    return verticalLayout($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda_4);
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_3($receiver) {
+    set_borderRadius($receiver, get_px(4).toString());
+    set_border($receiver, '1px solid #d4d4d4');
+    set_margin($receiver, get_px(8).toString());
+    set_padding($receiver, get_px(8).toString());
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.text = 'Topics';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_5($receiver) {
+    $receiver.text = 'Rendering with React';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_6($receiver) {
+    $receiver.text = 'Components';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_7($receiver) {
+    $receiver.text = 'Props v. State';
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+    set_borderRadius($receiver, get_px(4).toString());
+    set_border($receiver, '1px solid #d4d4d4');
+    set_margin($receiver, get_px(8).toString());
+    set_padding($receiver, get_px(8).toString());
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    return Unit;
+  }
+  function App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$text) {
     return function (params) {
       var tmp$;
       var tmp$_0 = closure$text;
@@ -168,79 +309,57 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
       return Unit;
     };
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda(closure$meta) {
+  function App2$setup$lambda$lambda$lambda$lambda$lambda$lambda(closure$meta) {
     return function ($receiver) {
-      $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda);
-      var text = textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0);
-      closure$meta.params.observe_qlkmfe$(App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(text));
+      $receiver.style_cjs1gm$(App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda);
+      var text = textView($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0);
+      closure$meta.params.observe_qlkmfe$(App2$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1(text));
       return Unit;
     };
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_8($receiver, meta) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda(meta));
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_8($receiver, meta) {
+    return verticalLayout($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda$lambda(meta));
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+  function App2$setup$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
     $receiver.text = 'Please select a topic';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_9($receiver, it) {
-    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0);
+  function App2$setup$lambda$lambda$lambda$lambda$lambda_9($receiver, it) {
+    return textView($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda$lambda_0);
   }
-  function App$setup$lambda$lambda$lambda$lambda_5(closure$meta) {
-    return function ($receiver) {
-      $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_3);
-      textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_4);
-      link($receiver, closure$meta.url + '/rendering', App$setup$lambda$lambda$lambda$lambda$lambda_5);
-      link($receiver, closure$meta.url + '/components', App$setup$lambda$lambda$lambda$lambda$lambda_6);
-      link($receiver, closure$meta.url + '/props-v-state', App$setup$lambda$lambda$lambda$lambda$lambda_7);
-      route($receiver, '/:topic', void 0, App$setup$lambda$lambda$lambda$lambda$lambda_8);
-      route($receiver, '/', true, App$setup$lambda$lambda$lambda$lambda$lambda_9);
-      return Unit;
-    };
-  }
-  function App$setup$lambda$lambda$lambda_2($receiver, meta) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_5(meta));
-  }
-  function App$setup$lambda$lambda($receiver) {
-    verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda);
-    route($receiver, '/', true, App$setup$lambda$lambda$lambda_0);
-    route($receiver, '/about', void 0, App$setup$lambda$lambda$lambda_1);
-    route($receiver, '/topics', void 0, App$setup$lambda$lambda$lambda_2);
+  function App2$setup$lambda$lambda$lambda$lambda_5($receiver) {
+    $receiver.style_cjs1gm$(App2$setup$lambda$lambda$lambda$lambda$lambda_3);
+    textView($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_4);
+    link($receiver, '/rendering', void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_5);
+    link($receiver, '/components', void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_6);
+    link($receiver, '/props-v-state', void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_7);
+    route($receiver, '/:topic', void 0, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_8);
+    route($receiver, '/', true, void 0, App2$setup$lambda$lambda$lambda$lambda$lambda_9);
     return Unit;
   }
-  function App$setup$lambda($receiver) {
+  function App2$setup$lambda$lambda$lambda_2($receiver, meta) {
+    return verticalLayout($receiver, void 0, App2$setup$lambda$lambda$lambda$lambda_5);
+  }
+  function App2$setup$lambda$lambda($receiver) {
+    verticalLayout($receiver, void 0, App2$setup$lambda$lambda$lambda);
+    route($receiver, '/', true, void 0, App2$setup$lambda$lambda$lambda_0);
+    route($receiver, '/about', void 0, void 0, App2$setup$lambda$lambda$lambda_1);
+    route($receiver, '/topics', void 0, void 0, App2$setup$lambda$lambda$lambda_2);
+    return Unit;
+  }
+  function App2$setup$lambda($receiver) {
     $receiver.id = 'page';
-    verticalLayout($receiver, void 0, App$setup$lambda$lambda);
+    verticalLayout($receiver, void 0, App2$setup$lambda$lambda);
     return Unit;
   }
-  App.prototype.setup = function () {
-    page(void 0, App$setup$lambda);
+  App2.prototype.setup = function () {
+    page(void 0, App2$setup$lambda);
   };
-  App.$metadata$ = {
+  App2.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'App',
+    simpleName: 'App2',
     interfaces: []
   };
-  function link$lambda$lambda(closure$path) {
-    return function (it) {
-      it.preventDefault();
-      Router_getInstance().navigateTo_61zpoe$(closure$path);
-      return Unit;
-    };
-  }
-  function link$lambda(closure$path, closure$block) {
-    return function ($receiver) {
-      $receiver.href = closure$path;
-      $receiver.onClick = link$lambda$lambda(closure$path);
-      closure$block != null ? closure$block($receiver) : null;
-      return Unit;
-    };
-  }
-  function link($receiver, path, block) {
-    if (block === void 0)
-      block = null;
-    return a($receiver, void 0, link$lambda(path, block));
-  }
   function DashboardPage(pageViewController) {
     Component.call(this);
     this.pageViewController_0 = pageViewController;
@@ -594,11 +713,14 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     $receiver.isVisible = false;
     return Unit;
   }
-  function route($receiver, path, isExact, block) {
+  function route($receiver, path, isExact, isAbsolute, block) {
     if (isExact === void 0)
       isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
     var oldPath = Router_getInstance().currentPath;
-    Router_getInstance().currentPath = '/' + trim(Router_getInstance().currentPath, Kotlin.charArrayOf(47)) + '/' + trim(path, Kotlin.charArrayOf(47));
+    var routePath = getPath(isAbsolute, path);
+    Router_getInstance().currentPath = routePath;
     var routeSegments = getSegments(Router_getInstance().currentPath);
     var parentRoute = Router_getInstance().currentRoute;
     var reference = view($receiver, void 0, route$lambda);
@@ -615,7 +737,15 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     Router_getInstance().currentPath = oldPath;
     return route;
   }
-  var isBlank = Kotlin.kotlin.text.isBlank_gw00vp$;
+  function getPath(isAbsolute, path) {
+    var tmp$;
+    var trimmedCurrentPath = trim(Router_getInstance().currentPath, Kotlin.charArrayOf(47));
+    if (isAbsolute || isBlank(trimmedCurrentPath))
+      tmp$ = '/' + trim(path, Kotlin.charArrayOf(47));
+    else
+      tmp$ = '/' + trimmedCurrentPath + '/' + trim(path, Kotlin.charArrayOf(47));
+    return tmp$;
+  }
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   function getSegments(currentPath) {
@@ -693,6 +823,29 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'RouteMeta',
     interfaces: []
   };
+  function link$lambda$lambda(closure$completePath) {
+    return function (it) {
+      it.preventDefault();
+      Router_getInstance().navigateTo_61zpoe$(closure$completePath);
+      return Unit;
+    };
+  }
+  function link$lambda(closure$isAbsolute, closure$path, closure$block) {
+    return function ($receiver) {
+      var completePath = getPath(closure$isAbsolute, closure$path);
+      $receiver.href = completePath;
+      $receiver.onClick = link$lambda$lambda(completePath);
+      closure$block != null ? closure$block($receiver) : null;
+      return Unit;
+    };
+  }
+  function link($receiver, path, isAbsolute, block) {
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    if (block === void 0)
+      block = null;
+    return a($receiver, void 0, link$lambda(isAbsolute, path, block));
+  }
   function Router() {
     Router_instance = this;
     window.onpopstate = Router_init$lambda;
@@ -736,7 +889,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var package$kuntut = package$narbase.kuntut || (package$narbase.kuntut = {});
   package$kuntut.main_kand9s$ = main;
   package$kuntut.App = App;
-  package$kuntut.link_6xqxb6$ = link;
+  package$kuntut.App2 = App2;
   package$kuntut.DashboardPage = DashboardPage;
   package$kuntut.PageComponent = PageComponent;
   package$kuntut.PageViewController = PageViewController;
@@ -744,12 +897,14 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   package$kuntut.LoginComponent = LoginComponent;
   package$kuntut.TextWithLabelComponent = TextWithLabelComponent;
   package$kuntut.Route = Route;
-  package$kuntut.route_f6i0nx$ = route;
+  package$kuntut.route_kijlnq$ = route;
+  package$kuntut.getPath_8kj6y5$ = getPath;
   package$kuntut.getSegments_61zpoe$ = getSegments;
   package$kuntut.getComponent_swacdx$ = getComponent;
   package$kuntut.RouteSegment = RouteSegment;
   package$kuntut.ParameterSegment = ParameterSegment;
   package$kuntut.RouteMeta = RouteMeta;
+  package$kuntut.link_uo881t$ = link;
   Object.defineProperty(package$kuntut, 'Router', {
     get: Router_getInstance
   });

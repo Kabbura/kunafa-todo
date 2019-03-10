@@ -24,7 +24,6 @@ object Router {
 
     private fun update() {
         routes.forEach { route ->
-//            console.log("Router: ${route.path}")
             route.update()
         }
     }
