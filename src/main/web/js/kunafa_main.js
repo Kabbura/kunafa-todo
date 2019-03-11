@@ -36,9 +36,9 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
   var trim = Kotlin.kotlin.text.trim_wqw3xr$;
   var isBlank = Kotlin.kotlin.text.isBlank_gw00vp$;
-  var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var startsWith = Kotlin.kotlin.text.startsWith_7epoxm$;
+  var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var a = $module$kunafa.com.narbase.kunafa.core.components.a_i4874s$;
   var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
   DashboardPage.prototype = Object.create(Component.prototype);
@@ -49,8 +49,8 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   LoginComponent.prototype.constructor = LoginComponent;
   TextWithLabelComponent.prototype = Object.create(Component.prototype);
   TextWithLabelComponent.prototype.constructor = TextWithLabelComponent;
-  getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
-  getComponent$ObjectLiteral.prototype.constructor = getComponent$ObjectLiteral;
+  Route$Companion$getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
+  Route$Companion$getComponent$ObjectLiteral.prototype.constructor = Route$Companion$getComponent$ObjectLiteral;
   ParameterSegment.prototype = Object.create(RouteSegment.prototype);
   ParameterSegment.prototype.constructor = ParameterSegment;
   function main(args) {
@@ -654,26 +654,26 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   function Route(meta, segments, component, parentRoute, parentView, referenceView, isExact) {
     Route$Companion_getInstance();
-    this.meta_0 = meta;
-    this.segments_0 = segments;
-    this.component_0 = component;
-    this.parentRoute_0 = parentRoute;
-    this.parentView_0 = parentView;
-    this.referenceView_0 = referenceView;
+    this.meta = meta;
+    this.segments = segments;
+    this.component = component;
+    this.parentRoute = parentRoute;
+    this.parentView = parentView;
+    this.referenceView = referenceView;
     this.isExact = isExact;
     this.children_0 = ArrayList_init();
   }
   Object.defineProperty(Route.prototype, 'path', {
     get: function () {
-      return '/' + joinToString(this.segments_0, '/');
+      return '/' + joinToString(this.segments, '/');
     }
   });
   Route.prototype.update = function () {
     var tmp$, tmp$_0;
-    var windowSegments = getSegments(window.location.pathname);
+    var windowSegments = Route$Companion_getInstance().getSegments_61zpoe$(window.location.pathname);
     if (this.doesMatch_0(windowSegments)) {
-      Router_getInstance().currentRoute = this;
-      (tmp$ = this.parentView_0) != null ? tmp$.mountAfter_6ftq4c$(this.component_0, this.referenceView_0) : null;
+      Router_getInstance().parentRoute = this;
+      (tmp$ = this.parentView) != null ? tmp$.mountAfter_6ftq4c$(this.component, this.referenceView) : null;
       this.updatePathParams_0(windowSegments);
       var tmp$_1;
       tmp$_1 = this.children_0.iterator();
@@ -681,10 +681,10 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
         var element = tmp$_1.next();
         element.update();
       }
-      Router_getInstance().currentRoute = this.parentRoute_0;
+      Router_getInstance().parentRoute = this.parentRoute;
     }
      else {
-      (tmp$_0 = this.parentView_0) != null ? tmp$_0.unMount_7bau7r$(this.component_0) : null;
+      (tmp$_0 = this.parentView) != null ? tmp$_0.unMount_7bau7r$(this.component) : null;
     }
   };
   var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_q3lmfv$;
@@ -693,7 +693,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     var params = LinkedHashMap_init();
     var tmp$, tmp$_0;
     var index = 0;
-    tmp$ = this.segments_0.iterator();
+    tmp$ = this.segments.iterator();
     loop_label: while (tmp$.hasNext()) {
       var item = tmp$.next();
       var index_0 = checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0));
@@ -709,7 +709,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
        while (false);
     }
     if (!params.isEmpty()) {
-      this.meta_0.params.value = params;
+      this.meta.params.value = params;
     }
   };
   Route.prototype.add_20tn11$ = function (route) {
@@ -717,14 +717,14 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   };
   Route.prototype.doesMatch_0 = function (windowSegments) {
     if (this.isExact) {
-      if (this.segments_0.size !== windowSegments.size)
+      if (this.segments.size !== windowSegments.size)
         return false;
     }
-     else if (this.segments_0.size > windowSegments.size)
+     else if (this.segments.size > windowSegments.size)
       return false;
     var tmp$, tmp$_0;
     var index = 0;
-    tmp$ = this.segments_0.iterator();
+    tmp$ = this.segments.iterator();
     while (tmp$.hasNext()) {
       var item = tmp$.next();
       if (!item.matches_nka84f$(getOrNull(windowSegments, checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)))))
@@ -744,73 +744,52 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
       isExact = false;
     if (isAbsolute === void 0)
       isAbsolute = false;
+    var tmp$;
     var oldPath = Router_getInstance().currentPath;
-    var routePath = this.getPath_ivxn3r$(path, isAbsolute);
+    var routePath = this.getPath_qz9155$(Router_getInstance().currentPath, path, isAbsolute);
     Router_getInstance().currentPath = routePath;
-    var routeSegments = getSegments(Router_getInstance().currentPath);
-    var parentRoute = Router_getInstance().currentRoute;
+    var routeSegments = this.getSegments_61zpoe$(routePath);
     var reference = view(parentView, void 0, Route$Companion$createRoute$lambda);
-    var meta = new RouteMeta(Router_getInstance().currentPath, new Observable());
+    var meta = new RouteMeta(routePath, new Observable());
     var component = block(meta);
-    var route = new Route(meta, routeSegments, component, parentRoute, parentView, reference, isExact);
-    if (parentRoute == null) {
+    var route = new Route(meta, routeSegments, component, Router_getInstance().parentRoute, parentView, reference, isExact);
+    if (Router_getInstance().parentRoute == null) {
       Router_getInstance().add_20tn11$(route);
     }
      else {
-      parentRoute.add_20tn11$(route);
+      (tmp$ = Router_getInstance().parentRoute) != null ? (tmp$.add_20tn11$(route), Unit) : null;
     }
     route.update();
     Router_getInstance().currentPath = oldPath;
     return route;
   };
-  Route$Companion.prototype.getPath_ivxn3r$ = function (path, isAbsolute) {
+  Route$Companion.prototype.getPath_qz9155$ = function (currentPath, path, isAbsolute) {
     var tmp$;
-    var trimmedCurrentPath = trim(Router_getInstance().currentPath, Kotlin.charArrayOf(47));
+    var trimmedCurrentPath = trim(currentPath, Kotlin.charArrayOf(47));
     if (isAbsolute || isBlank(trimmedCurrentPath))
       tmp$ = '/' + trim(path, Kotlin.charArrayOf(47));
     else
       tmp$ = '/' + trimmedCurrentPath + '/' + trim(path, Kotlin.charArrayOf(47));
     return tmp$;
   };
-  Route$Companion.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'Companion',
-    interfaces: []
-  };
-  var Route$Companion_instance = null;
-  function Route$Companion_getInstance() {
-    if (Route$Companion_instance === null) {
-      new Route$Companion();
-    }
-    return Route$Companion_instance;
+  function Route$Companion$getComponent$ObjectLiteral(closure$block, closure$meta) {
+    this.closure$block = closure$block;
+    this.closure$meta = closure$meta;
+    Component.call(this);
   }
-  Route.$metadata$ = {
+  Route$Companion$getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
+    return this.closure$block($receiver, this.closure$meta);
+  };
+  Route$Companion$getComponent$ObjectLiteral.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'Route',
-    interfaces: []
+    interfaces: [Component]
   };
-  function route$lambda(closure$block) {
-    return function (meta) {
-      return getComponent(meta, closure$block);
-    };
-  }
-  function route($receiver, path, isExact, isAbsolute, block) {
-    if (isExact === void 0)
-      isExact = false;
-    if (isAbsolute === void 0)
-      isAbsolute = false;
-    return routeComponent($receiver, path, isExact, isAbsolute, route$lambda(block));
-  }
-  function routeComponent($receiver, path, isExact, isAbsolute, block) {
-    if (isExact === void 0)
-      isExact = false;
-    if (isAbsolute === void 0)
-      isAbsolute = false;
-    return Route$Companion_getInstance().createRoute_45f9fm$($receiver, path, isExact, isAbsolute, block);
-  }
+  Route$Companion.prototype.getComponent_swacdx$ = function (meta, block) {
+    return new Route$Companion$getComponent$ObjectLiteral(block, meta);
+  };
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  function getSegments(currentPath) {
+  Route$Companion.prototype.getSegments_61zpoe$ = function (currentPath) {
     var $receiver = split(currentPath, Kotlin.charArrayOf(47));
     var destination = ArrayList_init();
     var tmp$;
@@ -837,21 +816,42 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
       tmp$_1.call(destination_0, transform$result);
     }
     return destination_0;
-  }
-  function getComponent$ObjectLiteral(closure$block, closure$meta) {
-    this.closure$block = closure$block;
-    this.closure$meta = closure$meta;
-    Component.call(this);
-  }
-  getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
-    return this.closure$block($receiver, this.closure$meta);
   };
-  getComponent$ObjectLiteral.$metadata$ = {
+  Route$Companion.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Companion',
+    interfaces: []
+  };
+  var Route$Companion_instance = null;
+  function Route$Companion_getInstance() {
+    if (Route$Companion_instance === null) {
+      new Route$Companion();
+    }
+    return Route$Companion_instance;
+  }
+  Route.$metadata$ = {
     kind: Kind_CLASS,
-    interfaces: [Component]
+    simpleName: 'Route',
+    interfaces: []
   };
-  function getComponent(meta, block) {
-    return new getComponent$ObjectLiteral(block, meta);
+  function route$lambda(closure$block) {
+    return function (meta) {
+      return Route$Companion_getInstance().getComponent_swacdx$(meta, closure$block);
+    };
+  }
+  function route($receiver, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    return routeComponent($receiver, path, isExact, isAbsolute, route$lambda(block));
+  }
+  function routeComponent($receiver, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    return Route$Companion_getInstance().createRoute_45f9fm$($receiver, path, isExact, isAbsolute, block);
   }
   function RouteSegment(text) {
     this.text = text;
@@ -899,7 +899,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   }
   function link$lambda(closure$path, closure$block) {
     return function ($receiver) {
-      var completePath = Route$Companion_getInstance().getPath_ivxn3r$(closure$path, true);
+      var completePath = Route$Companion_getInstance().getPath_qz9155$(Router_getInstance().currentPath, closure$path, true);
       $receiver.href = completePath;
       $receiver.onClick = link$lambda$lambda(completePath);
       closure$block != null ? closure$block($receiver) : null;
@@ -915,19 +915,19 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     Router_instance = this;
     window.onpopstate = Router_init$lambda;
     this.currentPath = '/';
-    this.currentRoute = null;
-    this.routes_0 = ArrayList_init();
+    this.parentRoute = null;
+    this.rootRoutes_0 = ArrayList_init();
   }
   Router.prototype.update_0 = function () {
     var tmp$;
-    tmp$ = this.routes_0.iterator();
+    tmp$ = this.rootRoutes_0.iterator();
     while (tmp$.hasNext()) {
       var element = tmp$.next();
       element.update();
     }
   };
   Router.prototype.add_20tn11$ = function (route) {
-    this.routes_0.add_11rb$(route);
+    this.rootRoutes_0.add_11rb$(route);
   };
   Router.prototype.navigateTo_61zpoe$ = function (path) {
     window.history.pushState(null, '', '/' + trimStart(path, Kotlin.charArrayOf(47)));
@@ -967,8 +967,6 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   package$kuntut.Route = Route;
   package$kuntut.route_4y6kih$ = route;
   package$kuntut.routeComponent_lmcbhh$ = routeComponent;
-  package$kuntut.getSegments_61zpoe$ = getSegments;
-  package$kuntut.getComponent_swacdx$ = getComponent;
   package$kuntut.RouteSegment = RouteSegment;
   package$kuntut.ParameterSegment = ParameterSegment;
   package$kuntut.RouteMeta = RouteMeta;

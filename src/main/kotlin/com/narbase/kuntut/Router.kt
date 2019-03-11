@@ -18,18 +18,18 @@ object Router {
         }
     }
     var currentPath = "/"
-    var currentRoute: Route? = null
+    var parentRoute: Route? = null
 
-    private val routes = mutableListOf<Route>()
+    private val rootRoutes = mutableListOf<Route>()
 
     private fun update() {
-        routes.forEach { route ->
+        rootRoutes.forEach { route ->
             route.update()
         }
     }
 
     fun add(route: Route) {
-        routes.add(route)
+        rootRoutes.add(route)
     }
 
 
