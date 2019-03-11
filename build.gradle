@@ -29,7 +29,7 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
-    compile 'com.narbase:kunafa:0.2.0-alpha.5'
+    compile 'com.narbase:kunafa:0.2.0-alpha.8'
 }
 
 

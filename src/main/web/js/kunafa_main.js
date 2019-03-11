@@ -6,41 +6,42 @@ if (typeof kunafa === 'undefined') {
 }
 var kunafa_main = function (_, Kotlin, $module$kunafa) {
   'use strict';
+  var get_matchParent = $module$kunafa.com.narbase.kunafa.core.dimensions.dependent.get_matchParent_kn5s8$;
+  var set_width = $module$kunafa.com.narbase.kunafa.core.css.set_width_c3qti6$;
   var get_px = $module$kunafa.com.narbase.kunafa.core.dimensions.get_px_rcaex3$;
-  var set_padding = $module$kunafa.com.narbase.kunafa.core.css.set_padding_la1i9z$;
-  var Unit = Kotlin.kotlin.Unit;
-  var verticalLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalLayout_te8a6c$;
-  var set_borderRadius = $module$kunafa.com.narbase.kunafa.core.css.set_borderRadius_la1i9z$;
-  var set_border = $module$kunafa.com.narbase.kunafa.core.css.set_border_la1i9z$;
   var set_margin = $module$kunafa.com.narbase.kunafa.core.css.set_margin_la1i9z$;
+  var Unit = Kotlin.kotlin.Unit;
+  var routing = $module$kunafa.com.narbase.kunafa.core.routing;
+  var button = $module$kunafa.com.narbase.kunafa.core.components.button_4mjb1e$;
+  var link = $module$kunafa.com.narbase.kunafa.core.routing.link_6xqxb6$;
+  var verticalLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalLayout_te8a6c$;
+  var Color_init = $module$kunafa.com.narbase.kunafa.core.drawable.Color_init_61zpoe$;
+  var set_backgroundColor = $module$kunafa.com.narbase.kunafa.core.css.set_backgroundColor_ntmvhs$;
+  var set_height = $module$kunafa.com.narbase.kunafa.core.css.set_height_c3qti6$;
+  var set_marginTop = $module$kunafa.com.narbase.kunafa.core.css.set_marginTop_9np42l$;
+  var set_marginBottom = $module$kunafa.com.narbase.kunafa.core.css.set_marginBottom_9np42l$;
+  var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
   var textView = $module$kunafa.com.narbase.kunafa.core.components.textView_k17fs7$;
+  var route = $module$kunafa.com.narbase.kunafa.core.routing.route_2nc5dp$;
+  var routeComponent = $module$kunafa.com.narbase.kunafa.core.routing.routeComponent_julfhx$;
   var page = $module$kunafa.com.narbase.kunafa.core.components.page_6bmerh$;
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var Component = $module$kunafa.com.narbase.kunafa.core.components.Component;
+  var set_padding = $module$kunafa.com.narbase.kunafa.core.css.set_padding_la1i9z$;
+  var set_borderRadius = $module$kunafa.com.narbase.kunafa.core.css.set_borderRadius_la1i9z$;
+  var set_border = $module$kunafa.com.narbase.kunafa.core.css.set_border_la1i9z$;
   var Alignment = $module$kunafa.com.narbase.kunafa.core.css.Alignment;
   var set_alignItems = $module$kunafa.com.narbase.kunafa.core.css.set_alignItems_68dtfh$;
   var JustifyContent = $module$kunafa.com.narbase.kunafa.core.css.JustifyContent;
   var set_justifyContent = $module$kunafa.com.narbase.kunafa.core.css.set_justifyContent_c3ey27$;
   var Color = $module$kunafa.com.narbase.kunafa.core.drawable.Color;
   var set_color = $module$kunafa.com.narbase.kunafa.core.css.set_color_ntmvhs$;
-  var button = $module$kunafa.com.narbase.kunafa.core.components.button_4mjb1e$;
-  var Component = $module$kunafa.com.narbase.kunafa.core.components.Component;
-  var get_matchParent = $module$kunafa.com.narbase.kunafa.core.dimensions.dependent.get_matchParent_kn5s8$;
-  var set_width = $module$kunafa.com.narbase.kunafa.core.css.set_width_c3qti6$;
-  var set_height = $module$kunafa.com.narbase.kunafa.core.css.set_height_c3qti6$;
   var Observable = $module$kunafa.com.narbase.kunafa.core.lifecycle.Observable;
   var equals = Kotlin.equals;
   var textInput = $module$kunafa.com.narbase.kunafa.core.components.textInput_b3mkdq$;
   var horizontalLayout = $module$kunafa.com.narbase.kunafa.core.components.horizontalLayout_te8a6c$;
-  var joinToString = Kotlin.kotlin.collections.joinToString_fmv235$;
-  var getOrNull = Kotlin.kotlin.collections.getOrNull_yzln2o$;
-  var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
-  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
-  var isBlank = Kotlin.kotlin.text.isBlank_gw00vp$;
-  var split = Kotlin.kotlin.text.split_o64adg$;
-  var startsWith = Kotlin.kotlin.text.startsWith_7epoxm$;
-  var Kind_OBJECT = Kotlin.Kind.OBJECT;
-  var a = $module$kunafa.com.narbase.kunafa.core.components.a_i4874s$;
-  var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
+  TopicDetailsComponent.prototype = Object.create(Component.prototype);
+  TopicDetailsComponent.prototype.constructor = TopicDetailsComponent;
   DashboardPage.prototype = Object.create(Component.prototype);
   DashboardPage.prototype.constructor = DashboardPage;
   PageComponent.prototype = Object.create(Component.prototype);
@@ -49,10 +50,6 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   LoginComponent.prototype.constructor = LoginComponent;
   TextWithLabelComponent.prototype = Object.create(Component.prototype);
   TextWithLabelComponent.prototype.constructor = TextWithLabelComponent;
-  Route$Companion$getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
-  Route$Companion$getComponent$ObjectLiteral.prototype.constructor = Route$Companion$getComponent$ObjectLiteral;
-  ParameterSegment.prototype = Object.create(RouteSegment.prototype);
-  ParameterSegment.prototype.constructor = ParameterSegment;
   function main(args) {
     (new App()).setup();
   }
@@ -60,174 +57,214 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     this.pageViewController = new PageViewController();
   }
   function App$setup$lambda$lambda$lambda($receiver) {
-    set_padding($receiver, get_px(16).toString());
+    set_width($receiver, get_matchParent($receiver));
+    set_margin($receiver, get_px(32).toString());
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda(it) {
+    routing.Router.navigateTo_61zpoe$('/about');
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda($receiver) {
-    $receiver.text = 'Home';
+    $receiver.text = 'Navigate to about';
+    $receiver.onClick = App$setup$lambda$lambda$lambda$lambda$lambda;
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda_0($receiver) {
-    $receiver.text = 'About';
+    $receiver.text = 'Home';
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda_1($receiver) {
+    $receiver.text = 'About';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda_2($receiver) {
     $receiver.text = 'Topics';
     return Unit;
   }
   function App$setup$lambda$lambda$lambda_0($receiver) {
-    link($receiver, '/', App$setup$lambda$lambda$lambda$lambda);
-    link($receiver, '/about', App$setup$lambda$lambda$lambda$lambda_0);
-    link($receiver, '/topics', App$setup$lambda$lambda$lambda$lambda_1);
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda($receiver) {
-    set_borderRadius($receiver, get_px(4).toString());
-    set_border($receiver, '1px solid #d4d4d4');
-    set_margin($receiver, get_px(8).toString());
-    set_padding($receiver, get_px(8).toString());
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_0($receiver) {
-    $receiver.text = 'Home';
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda_2($receiver) {
-    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda);
-    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_0);
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda_1($receiver, it) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_2);
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_1($receiver) {
-    set_borderRadius($receiver, get_px(4).toString());
-    set_border($receiver, '1px solid #d4d4d4');
-    set_margin($receiver, get_px(8).toString());
-    set_padding($receiver, get_px(8).toString());
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_2($receiver) {
-    $receiver.text = 'About';
+    button($receiver, void 0, App$setup$lambda$lambda$lambda$lambda);
+    link($receiver, '/', App$setup$lambda$lambda$lambda$lambda_0);
+    link($receiver, '/about', App$setup$lambda$lambda$lambda$lambda_1);
+    link($receiver, '/topics', App$setup$lambda$lambda$lambda$lambda_2);
     return Unit;
   }
   function App$setup$lambda$lambda$lambda$lambda_3($receiver) {
-    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_1);
-    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_2);
+    set_backgroundColor($receiver, Color_init('aaa'));
+    set_width($receiver, get_matchParent($receiver));
+    set_height($receiver, get_px(1));
+    set_marginTop($receiver, get_px(32));
+    set_marginBottom($receiver, get_px(32));
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_1($receiver) {
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda_3);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.set_puj7f4$('width', get_px(4).toString());
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda_4($receiver) {
+    $receiver.text = 'Home';
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_0);
     return Unit;
   }
   function App$setup$lambda$lambda$lambda_2($receiver, it) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_3);
+    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_4);
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_3($receiver) {
-    set_borderRadius($receiver, get_px(4).toString());
-    set_border($receiver, '1px solid #d4d4d4');
-    set_margin($receiver, get_px(8).toString());
-    set_padding($receiver, get_px(8).toString());
+  function App$setup$lambda$lambda$lambda$lambda$lambda_1($receiver) {
+    $receiver.text = 'About';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_4($receiver) {
+  function App$setup$lambda$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.text = 'Go to us';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+    $receiver.text = 'Us';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.text = 'Go to 1';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+    $receiver.text = '1';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1($receiver, it) {
+    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda$lambda);
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda);
+    link($receiver, '/about/us/1', App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_0);
+    route($receiver, '/1', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda$lambda_1);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_3($receiver, it) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda);
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
+    $receiver.text = 'Us';
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_4($receiver, it) {
+    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0);
+  }
+  function App$setup$lambda$lambda$lambda$lambda_5($receiver) {
+    textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_1);
+    link($receiver, '/about/us', App$setup$lambda$lambda$lambda$lambda$lambda_2);
+    route($receiver, '/us', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_3);
+    route($receiver, '/contact', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_4);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_3($receiver, it) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_5);
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda_5($receiver) {
     $receiver.text = 'Topics';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_5($receiver) {
-    $receiver.text = 'Rendering with React';
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1($receiver) {
+    $receiver.text = 'Islam';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_6($receiver) {
-    $receiver.text = 'Components';
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_2($receiver) {
+    $receiver.text = 'Ayman';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_7($receiver) {
-    $receiver.text = 'Props v. State';
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_3($receiver) {
+    $receiver.text = 'Ahmed';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda($receiver) {
+  function App$setup$lambda$lambda$lambda$lambda$lambda_6(closure$meta) {
+    return function ($receiver) {
+      link($receiver, closure$meta.url + '/islam', App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1);
+      link($receiver, closure$meta.url + '/ayman', App$setup$lambda$lambda$lambda$lambda$lambda$lambda_2);
+      link($receiver, closure$meta.url + '/ahmed', App$setup$lambda$lambda$lambda$lambda$lambda$lambda_3);
+      return Unit;
+    };
+  }
+  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_4($receiver) {
     $receiver.text = 'Please select a topic';
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_8($receiver, it) {
-    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda);
+  function App$setup$lambda$lambda$lambda$lambda$lambda_7($receiver, it) {
+    return textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda_4);
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0($receiver) {
-    return Unit;
+  function App$setup$lambda$lambda$lambda$lambda$lambda_8(meta) {
+    return new TopicDetailsComponent(meta);
   }
-  function App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1(closure$myTextView) {
-    return function (params) {
-      var tmp$;
-      closure$myTextView.text = (tmp$ = params != null ? params.get_11rb$('topicName') : null) != null ? tmp$ : 'No value';
-      return Unit;
-    };
-  }
-  function App$setup$lambda$lambda$lambda$lambda$lambda_9($receiver, meta) {
-    var myTextView = textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda$lambda_0);
-    meta.params.observe_qlkmfe$(App$setup$lambda$lambda$lambda$lambda$lambda$lambda_1(myTextView));
-    return myTextView;
-  }
-  function App$setup$lambda$lambda$lambda$lambda_4(closure$meta) {
+  function App$setup$lambda$lambda$lambda$lambda_6(closure$meta) {
     return function ($receiver) {
-      $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda$lambda$lambda_3);
-      textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_4);
-      link($receiver, closure$meta.url + '/rendering', App$setup$lambda$lambda$lambda$lambda$lambda_5);
-      link($receiver, closure$meta.url + '/components', App$setup$lambda$lambda$lambda$lambda$lambda_6);
-      link($receiver, closure$meta.url + '/props-v-state', App$setup$lambda$lambda$lambda$lambda$lambda_7);
-      route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_8);
-      route($receiver, '/:topicName', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_9);
+      textView($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_5);
+      verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_6(closure$meta));
+      route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_7);
+      routeComponent($receiver, '/:topicParam', void 0, void 0, App$setup$lambda$lambda$lambda$lambda$lambda_8);
       return Unit;
     };
   }
-  function App$setup$lambda$lambda$lambda_3($receiver, meta) {
-    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_4(meta));
+  function App$setup$lambda$lambda$lambda_4($receiver, meta) {
+    return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_6(meta));
   }
-  function App$setup$lambda$lambda$lambda$lambda_5($receiver) {
-    $receiver.text = 'Login';
+  function App$setup$lambda$lambda($receiver) {
+    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda);
+    verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_0);
+    view($receiver, void 0, App$setup$lambda$lambda$lambda_1);
+    route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda_2);
+    route($receiver, '/about', void 0, void 0, App$setup$lambda$lambda$lambda_3);
+    route($receiver, '/topics', void 0, void 0, App$setup$lambda$lambda$lambda_4);
     return Unit;
   }
-  function App$setup$lambda$lambda$lambda$lambda_6($receiver) {
-    $receiver.text = 'Dashboard';
+  function App$setup$lambda($receiver) {
+    verticalLayout($receiver, void 0, App$setup$lambda$lambda);
     return Unit;
-  }
-  function App$setup$lambda$lambda$lambda_4($receiver) {
-    link($receiver, '/login', App$setup$lambda$lambda$lambda$lambda_5);
-    link($receiver, '/dashboard', App$setup$lambda$lambda$lambda$lambda_6);
-    return Unit;
-  }
-  function App$setup$lambda$lambda$lambda_5(this$App) {
-    return function (it) {
-      return new LoginComponent(new LoginPageViewController(this$App.pageViewController));
-    };
-  }
-  function App$setup$lambda$lambda$lambda_6(this$App) {
-    return function (it) {
-      return new DashboardPage(this$App.pageViewController);
-    };
-  }
-  function App$setup$lambda$lambda(this$App) {
-    return function ($receiver) {
-      $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda);
-      verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_0);
-      route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda_1);
-      route($receiver, '/about', void 0, void 0, App$setup$lambda$lambda$lambda_2);
-      route($receiver, '/topics', void 0, void 0, App$setup$lambda$lambda$lambda_3);
-      verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_4);
-      routeComponent($receiver, '/login', void 0, void 0, App$setup$lambda$lambda$lambda_5(this$App));
-      routeComponent($receiver, '/dashboard', void 0, void 0, App$setup$lambda$lambda$lambda_6(this$App));
-      return Unit;
-    };
-  }
-  function App$setup$lambda(this$App) {
-    return function ($receiver) {
-      verticalLayout($receiver, void 0, App$setup$lambda$lambda(this$App));
-      return Unit;
-    };
   }
   App.prototype.setup = function () {
-    page(void 0, App$setup$lambda(this));
+    page(void 0, App$setup$lambda);
   };
   App.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'App',
     interfaces: []
+  };
+  function TopicDetailsComponent(meta) {
+    Component.call(this);
+    this.meta = meta;
+    this.topicNameTextView = null;
+  }
+  function TopicDetailsComponent$onViewMounted$lambda(this$TopicDetailsComponent) {
+    return function (params) {
+      var tmp$, tmp$_0;
+      (tmp$_0 = this$TopicDetailsComponent.topicNameTextView) != null ? (tmp$_0.text = (tmp$ = params != null ? params.get_11rb$('topicParam') : null) != null ? tmp$ : '') : null;
+      return Unit;
+    };
+  }
+  TopicDetailsComponent.prototype.onViewMounted_1xffwv$ = function (lifecycleOwner) {
+    this.meta.params.observe_qlkmfe$(TopicDetailsComponent$onViewMounted$lambda(this));
+  };
+  function TopicDetailsComponent$getView$lambda$lambda($receiver) {
+    $receiver.text = 'Inside Topic dDetails component';
+    return Unit;
+  }
+  function TopicDetailsComponent$getView$lambda$lambda_0($receiver) {
+    return Unit;
+  }
+  function TopicDetailsComponent$getView$lambda(this$TopicDetailsComponent) {
+    return function ($receiver) {
+      textView($receiver, void 0, TopicDetailsComponent$getView$lambda$lambda);
+      this$TopicDetailsComponent.topicNameTextView = textView($receiver, void 0, TopicDetailsComponent$getView$lambda$lambda_0);
+      return Unit;
+    };
+  }
+  TopicDetailsComponent.prototype.getView_art3zr$ = function ($receiver) {
+    return verticalLayout($receiver, void 0, TopicDetailsComponent$getView$lambda(this));
+  };
+  TopicDetailsComponent.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'TopicDetailsComponent',
+    interfaces: [Component]
   };
   function App2() {
   }
@@ -651,309 +688,12 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'TextWithLabelComponent',
     interfaces: [Component]
   };
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
-  function Route(meta, segments, component, parentRoute, parentView, referenceView, isExact) {
-    Route$Companion_getInstance();
-    this.meta = meta;
-    this.segments = segments;
-    this.component = component;
-    this.parentRoute = parentRoute;
-    this.parentView = parentView;
-    this.referenceView = referenceView;
-    this.isExact = isExact;
-    this.children_0 = ArrayList_init();
-  }
-  Object.defineProperty(Route.prototype, 'path', {
-    get: function () {
-      return '/' + joinToString(this.segments, '/');
-    }
-  });
-  Route.prototype.update = function () {
-    var tmp$, tmp$_0;
-    var windowSegments = Route$Companion_getInstance().getSegments_61zpoe$(window.location.pathname);
-    if (this.doesMatch_0(windowSegments)) {
-      Router_getInstance().parentRoute = this;
-      (tmp$ = this.parentView) != null ? tmp$.mountAfter_6ftq4c$(this.component, this.referenceView) : null;
-      this.updatePathParams_0(windowSegments);
-      var tmp$_1;
-      tmp$_1 = this.children_0.iterator();
-      while (tmp$_1.hasNext()) {
-        var element = tmp$_1.next();
-        element.update();
-      }
-      Router_getInstance().parentRoute = this.parentRoute;
-    }
-     else {
-      (tmp$_0 = this.parentView) != null ? tmp$_0.unMount_7bau7r$(this.component) : null;
-    }
-  };
-  var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_q3lmfv$;
-  var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
-  Route.prototype.updatePathParams_0 = function (windowSegments) {
-    var params = LinkedHashMap_init();
-    var tmp$, tmp$_0;
-    var index = 0;
-    tmp$ = this.segments.iterator();
-    loop_label: while (tmp$.hasNext()) {
-      var item = tmp$.next();
-      var index_0 = checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0));
-      action$break: do {
-        var tmp$_1, tmp$_2, tmp$_3;
-        if (!Kotlin.isType(item, ParameterSegment))
-          break action$break;
-        var s = Kotlin.isType(tmp$_1 = item, ParameterSegment) ? tmp$_1 : null;
-        var windowSegment = windowSegments.get_za3lpa$(index_0).text;
-        tmp$_3 = (tmp$_2 = s != null ? s.text : null) != null ? tmp$_2 : '';
-        params.put_xwzc9p$(tmp$_3, windowSegment);
-      }
-       while (false);
-    }
-    if (!params.isEmpty()) {
-      this.meta.params.value = params;
-    }
-  };
-  Route.prototype.add_20tn11$ = function (route) {
-    this.children_0.add_11rb$(route);
-  };
-  Route.prototype.doesMatch_0 = function (windowSegments) {
-    if (this.isExact) {
-      if (this.segments.size !== windowSegments.size)
-        return false;
-    }
-     else if (this.segments.size > windowSegments.size)
-      return false;
-    var tmp$, tmp$_0;
-    var index = 0;
-    tmp$ = this.segments.iterator();
-    while (tmp$.hasNext()) {
-      var item = tmp$.next();
-      if (!item.matches_nka84f$(getOrNull(windowSegments, checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)))))
-        return false;
-    }
-    return true;
-  };
-  function Route$Companion() {
-    Route$Companion_instance = this;
-  }
-  function Route$Companion$createRoute$lambda($receiver) {
-    $receiver.isVisible = false;
-    return Unit;
-  }
-  Route$Companion.prototype.createRoute_45f9fm$ = function (parentView, path, isExact, isAbsolute, block) {
-    if (isExact === void 0)
-      isExact = false;
-    if (isAbsolute === void 0)
-      isAbsolute = false;
-    var tmp$;
-    var oldPath = Router_getInstance().currentPath;
-    var routePath = this.getPath_qz9155$(Router_getInstance().currentPath, path, isAbsolute);
-    Router_getInstance().currentPath = routePath;
-    var routeSegments = this.getSegments_61zpoe$(routePath);
-    var reference = view(parentView, void 0, Route$Companion$createRoute$lambda);
-    var meta = new RouteMeta(routePath, new Observable());
-    var component = block(meta);
-    var route = new Route(meta, routeSegments, component, Router_getInstance().parentRoute, parentView, reference, isExact);
-    if (Router_getInstance().parentRoute == null) {
-      Router_getInstance().add_20tn11$(route);
-    }
-     else {
-      (tmp$ = Router_getInstance().parentRoute) != null ? (tmp$.add_20tn11$(route), Unit) : null;
-    }
-    route.update();
-    Router_getInstance().currentPath = oldPath;
-    return route;
-  };
-  Route$Companion.prototype.getPath_qz9155$ = function (currentPath, path, isAbsolute) {
-    var tmp$;
-    var trimmedCurrentPath = trim(currentPath, Kotlin.charArrayOf(47));
-    if (isAbsolute || isBlank(trimmedCurrentPath))
-      tmp$ = '/' + trim(path, Kotlin.charArrayOf(47));
-    else
-      tmp$ = '/' + trimmedCurrentPath + '/' + trim(path, Kotlin.charArrayOf(47));
-    return tmp$;
-  };
-  function Route$Companion$getComponent$ObjectLiteral(closure$block, closure$meta) {
-    this.closure$block = closure$block;
-    this.closure$meta = closure$meta;
-    Component.call(this);
-  }
-  Route$Companion$getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
-    return this.closure$block($receiver, this.closure$meta);
-  };
-  Route$Companion$getComponent$ObjectLiteral.$metadata$ = {
-    kind: Kind_CLASS,
-    interfaces: [Component]
-  };
-  Route$Companion.prototype.getComponent_swacdx$ = function (meta, block) {
-    return new Route$Companion$getComponent$ObjectLiteral(block, meta);
-  };
-  var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
-  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  Route$Companion.prototype.getSegments_61zpoe$ = function (currentPath) {
-    var $receiver = split(currentPath, Kotlin.charArrayOf(47));
-    var destination = ArrayList_init();
-    var tmp$;
-    tmp$ = $receiver.iterator();
-    while (tmp$.hasNext()) {
-      var element = tmp$.next();
-      if (!isBlank(element))
-        destination.add_11rb$(element);
-    }
-    var stringSegments = destination;
-    var destination_0 = ArrayList_init_0(collectionSizeOrDefault(stringSegments, 10));
-    var tmp$_0;
-    tmp$_0 = stringSegments.iterator();
-    while (tmp$_0.hasNext()) {
-      var item = tmp$_0.next();
-      var tmp$_1 = destination_0.add_11rb$;
-      var transform$result;
-      if (startsWith(item, ':')) {
-        transform$result = new ParameterSegment(trim(item, Kotlin.charArrayOf(58)));
-      }
-       else {
-        transform$result = new RouteSegment(item);
-      }
-      tmp$_1.call(destination_0, transform$result);
-    }
-    return destination_0;
-  };
-  Route$Companion.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'Companion',
-    interfaces: []
-  };
-  var Route$Companion_instance = null;
-  function Route$Companion_getInstance() {
-    if (Route$Companion_instance === null) {
-      new Route$Companion();
-    }
-    return Route$Companion_instance;
-  }
-  Route.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Route',
-    interfaces: []
-  };
-  function route$lambda(closure$block) {
-    return function (meta) {
-      return Route$Companion_getInstance().getComponent_swacdx$(meta, closure$block);
-    };
-  }
-  function route($receiver, path, isExact, isAbsolute, block) {
-    if (isExact === void 0)
-      isExact = false;
-    if (isAbsolute === void 0)
-      isAbsolute = false;
-    return routeComponent($receiver, path, isExact, isAbsolute, route$lambda(block));
-  }
-  function routeComponent($receiver, path, isExact, isAbsolute, block) {
-    if (isExact === void 0)
-      isExact = false;
-    if (isAbsolute === void 0)
-      isAbsolute = false;
-    return Route$Companion_getInstance().createRoute_45f9fm$($receiver, path, isExact, isAbsolute, block);
-  }
-  function RouteSegment(text) {
-    this.text = text;
-  }
-  RouteSegment.prototype.matches_nka84f$ = function (route) {
-    return equals(this.text, route != null ? route.text : null);
-  };
-  RouteSegment.prototype.toString = function () {
-    return this.text;
-  };
-  RouteSegment.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'RouteSegment',
-    interfaces: []
-  };
-  function ParameterSegment(text) {
-    RouteSegment.call(this, text);
-  }
-  ParameterSegment.prototype.matches_nka84f$ = function (route) {
-    return route != null;
-  };
-  ParameterSegment.prototype.toString = function () {
-    return ':' + this.text;
-  };
-  ParameterSegment.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'ParameterSegment',
-    interfaces: [RouteSegment]
-  };
-  function RouteMeta(url, params) {
-    this.url = url;
-    this.params = params;
-  }
-  RouteMeta.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'RouteMeta',
-    interfaces: []
-  };
-  function link$lambda$lambda(closure$completePath) {
-    return function (it) {
-      it.preventDefault();
-      Router_getInstance().navigateTo_61zpoe$(closure$completePath);
-      return Unit;
-    };
-  }
-  function link$lambda(closure$path, closure$block) {
-    return function ($receiver) {
-      var completePath = Route$Companion_getInstance().getPath_qz9155$(Router_getInstance().currentPath, closure$path, true);
-      $receiver.href = completePath;
-      $receiver.onClick = link$lambda$lambda(completePath);
-      closure$block != null ? closure$block($receiver) : null;
-      return Unit;
-    };
-  }
-  function link($receiver, path, block) {
-    if (block === void 0)
-      block = null;
-    return a($receiver, void 0, link$lambda(path, block));
-  }
-  function Router() {
-    Router_instance = this;
-    window.onpopstate = Router_init$lambda;
-    this.currentPath = '/';
-    this.parentRoute = null;
-    this.rootRoutes_0 = ArrayList_init();
-  }
-  Router.prototype.update_0 = function () {
-    var tmp$;
-    tmp$ = this.rootRoutes_0.iterator();
-    while (tmp$.hasNext()) {
-      var element = tmp$.next();
-      element.update();
-    }
-  };
-  Router.prototype.add_20tn11$ = function (route) {
-    this.rootRoutes_0.add_11rb$(route);
-  };
-  Router.prototype.navigateTo_61zpoe$ = function (path) {
-    window.history.pushState(null, '', '/' + trimStart(path, Kotlin.charArrayOf(47)));
-    Router_getInstance().update_0();
-  };
-  function Router_init$lambda(it) {
-    Router_getInstance().update_0();
-    return Unit;
-  }
-  Router.$metadata$ = {
-    kind: Kind_OBJECT,
-    simpleName: 'Router',
-    interfaces: []
-  };
-  var Router_instance = null;
-  function Router_getInstance() {
-    if (Router_instance === null) {
-      new Router();
-    }
-    return Router_instance;
-  }
   var package$com = _.com || (_.com = {});
   var package$narbase = package$com.narbase || (package$com.narbase = {});
   var package$kuntut = package$narbase.kuntut || (package$narbase.kuntut = {});
   package$kuntut.main_kand9s$ = main;
   package$kuntut.App = App;
+  package$kuntut.TopicDetailsComponent = TopicDetailsComponent;
   package$kuntut.App2 = App2;
   package$kuntut.DashboardPage = DashboardPage;
   package$kuntut.PageComponent = PageComponent;
@@ -961,19 +701,6 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   package$kuntut.LoginPageViewController = LoginPageViewController;
   package$kuntut.LoginComponent = LoginComponent;
   package$kuntut.TextWithLabelComponent = TextWithLabelComponent;
-  Object.defineProperty(Route, 'Companion', {
-    get: Route$Companion_getInstance
-  });
-  package$kuntut.Route = Route;
-  package$kuntut.route_4y6kih$ = route;
-  package$kuntut.routeComponent_lmcbhh$ = routeComponent;
-  package$kuntut.RouteSegment = RouteSegment;
-  package$kuntut.ParameterSegment = ParameterSegment;
-  package$kuntut.RouteMeta = RouteMeta;
-  package$kuntut.link_6xqxb6$ = link;
-  Object.defineProperty(package$kuntut, 'Router', {
-    get: Router_getInstance
-  });
   main([]);
   Kotlin.defineModule('kunafa_main', _);
   return _;

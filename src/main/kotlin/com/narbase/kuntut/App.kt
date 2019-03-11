@@ -11,7 +11,11 @@ package com.narbase.kuntut
 
 import com.narbase.kunafa.core.components.*
 import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.dependent.matchParent
 import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.drawable.Color
+import com.narbase.kunafa.core.lifecycle.LifecycleOwner
+import com.narbase.kunafa.core.routing.*
 
 fun main(args: Array<String>) {
     App().setup()
@@ -19,13 +23,23 @@ fun main(args: Array<String>) {
 
 class App() {
     val pageViewController = PageViewController()
+
+
     fun setup() {
         page {
             verticalLayout {
                 style {
-                    padding = 16.px.toString()
+                    width = matchParent
+                    margin = 32.px.toString()
                 }
                 verticalLayout {
+                    button {
+                        text ="Navigate to about"
+                        onClick = {
+                            Router.navigateTo("/about")
+                        }
+                    }
+
                     link("/") {
                         text = "Home"
                     }
@@ -37,59 +51,84 @@ class App() {
                     }
                 }
 
-                route("/", isExact = true) {
-                    verticalLayout {
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
-                        }
+                view {
+                    style {
+                        backgroundColor = Color("aaa")
+                        width = matchParent
+                        height = 1.px
+                        marginTop = 32.px
+                        marginBottom = 32.px
+                    }
+                }
 
-                        textView {
-                            text = "Home"
+                route("/", isExact = true) {
+                    textView {
+                        text = "Home"
+                        style {
+                            this["width"] = 4.px.toString()
                         }
                     }
                 }
 
                 route("/about") {
                     verticalLayout {
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
-                        }
-
                         textView {
                             text = "About"
                         }
-                    }
 
-                }
-                route("/topics") { meta ->
-                    verticalLayout {
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
+                        link("/about/us") {
+                            text = "Go to us"
                         }
 
+
+                        route("/us") {
+
+                            verticalLayout {
+
+                                textView {
+                                    text = "Us"
+                                }
+
+                                link("/about/us/1") {
+                                    text = "Go to 1"
+                                }
+
+                                route("/1") {
+                                    textView {
+                                        text = "1"
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                        route("/contact") {
+                            textView {
+                                text = "Us"
+                            }
+                        }
+                    }
+                }
+
+                route("/topics") { meta ->
+                    verticalLayout {
                         textView {
                             text = "Topics"
                         }
 
-                        link("${meta.url}/rendering") {
-                            text = "Rendering with React"
-                        }
-                        link("${meta.url}/components") {
-                            text = "Components"
-                        }
-                        link("${meta.url}/props-v-state") {
-                            text = "Props v. State"
-                        }
+                        verticalLayout {
 
+                            link("${meta.url}/islam") {
+                                text = "Islam"
+                            }
+                            link("${meta.url}/ayman") {
+                                text = "Ayman"
+                            }
+                            link("${meta.url}/ahmed") {
+                                text = "Ahmed"
+                            }
+                        }
 
                         route("/", isExact = true) {
                             textView {
@@ -97,41 +136,35 @@ class App() {
                             }
                         }
 
-                        route("/:topicName") { meta ->
 
-                            val myTextView = textView {
-
-                            }
-
-                            meta.params.observe { params ->
-                                myTextView.text = params?.get("topicName") ?: "No value"
-                            }
-                            myTextView
+                        routeComponent("/:topicParam") { meta ->
+                            TopicDetailsComponent(meta)
                         }
-
-                    }
-
-                }
-
-                verticalLayout {
-                    link("/login") {
-                        text = "Login"
-                    }
-                    link("/dashboard") {
-                        text = "Dashboard"
                     }
                 }
-                routeComponent("/login") {
-                    LoginComponent(LoginPageViewController(pageViewController))
-                }
-
-                routeComponent("/dashboard") {
-                    DashboardPage(pageViewController)
-                }
-
-
             }
         }
+    }
+}
+
+
+class TopicDetailsComponent(val meta: RouteMeta) : Component() {
+
+    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
+        meta.params.observe { params ->
+            topicNameTextView?.text = params?.get("topicParam") ?: ""
+
+        }
+    }
+
+    var topicNameTextView: TextView? = null
+    override fun View?.getView() = verticalLayout {
+        textView {
+            text = "Inside Topic dDetails component"
+        }
+        topicNameTextView = textView {
+        }
+
     }
 }
 

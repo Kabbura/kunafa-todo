@@ -7,8 +7,6 @@ var kunafa = function (_, Kotlin) {
   var throwCCE = Kotlin.throwCCE;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var Unit = Kotlin.kotlin.Unit;
-  var PropertyMetadata = Kotlin.PropertyMetadata;
-  var lazy = Kotlin.kotlin.lazy_klfg04$;
   var clear = Kotlin.kotlin.dom.clear_asww5s$;
   var addClass = Kotlin.kotlin.dom.addClass_hhb33f$;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
@@ -17,6 +15,7 @@ var kunafa = function (_, Kotlin) {
   var Enum = Kotlin.kotlin.Enum;
   var throwISE = Kotlin.throwISE;
   var toString = Kotlin.toString;
+  var PropertyMetadata = Kotlin.PropertyMetadata;
   var getPropertyCallableRef = Kotlin.getPropertyCallableRef;
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
   var mutableListOf = Kotlin.kotlin.collections.mutableListOf_i5x0yv$;
@@ -27,6 +26,11 @@ var kunafa = function (_, Kotlin) {
   var startsWith_0 = Kotlin.kotlin.text.startsWith_7epoxm$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var ConcurrentModificationException_init = Kotlin.kotlin.ConcurrentModificationException_init;
+  var getOrNull = Kotlin.kotlin.collections.getOrNull_yzln2o$;
+  var trim = Kotlin.kotlin.text.trim_wqw3xr$;
+  var isBlank = Kotlin.kotlin.text.isBlank_gw00vp$;
+  var split = Kotlin.kotlin.text.split_o64adg$;
+  var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
   Anchor.prototype = Object.create(View.prototype);
   Anchor.prototype.constructor = Anchor;
   ButtonView.prototype = Object.create(View.prototype);
@@ -99,6 +103,10 @@ var kunafa = function (_, Kotlin) {
   WrapContent.prototype.constructor = WrapContent;
   LifecycleEvent.prototype = Object.create(Enum.prototype);
   LifecycleEvent.prototype.constructor = LifecycleEvent;
+  Route$Companion$getComponent$ObjectLiteral.prototype = Object.create(Component.prototype);
+  Route$Companion$getComponent$ObjectLiteral.prototype.constructor = Route$Companion$getComponent$ObjectLiteral;
+  ParameterSegment.prototype = Object.create(RouteSegment.prototype);
+  ParameterSegment.prototype.constructor = ParameterSegment;
   function Anchor(parent) {
     if (parent === void 0)
       parent = null;
@@ -165,7 +173,6 @@ var kunafa = function (_, Kotlin) {
     var $receiver = Kotlin.isType(tmp$ = document.createElement('input'), HTMLInputElement) ? tmp$ : throwCCE();
     $receiver.type = 'checkbox';
     this.element_m5dmet$_0 = $receiver;
-    this.onChange_ex1wgk$_0 = null;
   }
   Object.defineProperty(Checkbox.prototype, 'element', {
     get: function () {
@@ -182,10 +189,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(Checkbox.prototype, 'onChange', {
     get: function () {
-      return this.onChange_ex1wgk$_0;
+      return this.element.onchange;
     },
     set: function (value) {
-      this.onChange_ex1wgk$_0 = value;
       this.element.onchange = value;
     }
   });
@@ -195,37 +201,41 @@ var kunafa = function (_, Kotlin) {
     interfaces: [View]
   };
   function Component() {
-    this.view_6apaz4$_xl05mn$_0 = lazy(Component$view$lambda(this));
+    this.view_6apaz4$_0 = null;
   }
-  Object.defineProperty(Component.prototype, 'view_6apaz4$_0', {
+  Object.defineProperty(Component.prototype, 'initializedView_jtp5wa$_0', {
     get: function () {
-      return this.view_6apaz4$_xl05mn$_0.value;
+      var tmp$;
+      var tmp$_0;
+      if ((tmp$ = this.view_6apaz4$_0) != null)
+        tmp$_0 = tmp$;
+      else {
+        var $receiver = this.getView_art3zr$(detached);
+        $receiver.bind_c4619k$(this);
+        tmp$_0 = $receiver;
+      }
+      var notNullView = tmp$_0;
+      if (this.view_6apaz4$_0 == null) {
+        this.view_6apaz4$_0 = notNullView;
+      }
+      return notNullView;
     }
   });
-  Component.prototype.onViewMounted_1xffwv$ = function (lifecycleOwner) {
-  };
-  Component.prototype.onViewRemoved_1xffwv$ = function (lifecycleOwner) {
-  };
-  Component.prototype.viewWillBeRemoved_1xffwv$ = function (lifecycleOwner) {
-  };
-  Component.prototype.viewWillMount_1xffwv$ = function (lifecycleOwner) {
-  };
   Component.prototype.addToParent_vqbcdi$ = function (parent) {
-    parent != null ? (parent.addChild_3bc3y1$(this.view_6apaz4$_0), Unit) : null;
+    parent != null ? (parent.addChild_3bc3y1$(this.initializedView_jtp5wa$_0), Unit) : null;
   };
   Component.prototype.addToParentAfter_qrl6q5$ = function (parent, referenceView) {
-    parent != null ? (parent.addChildAfter_libcmy$(this.view_6apaz4$_0, referenceView), Unit) : null;
+    parent != null ? (parent.addChildAfter_libcmy$(this.initializedView_jtp5wa$_0, referenceView), Unit) : null;
   };
   Component.prototype.removeFromParent_vqbcdi$ = function (parent) {
-    parent != null ? (parent.removeChild_3bc3y1$(this.view_6apaz4$_0), Unit) : null;
+    var tmp$;
+    tmp$ = this.view_6apaz4$_0;
+    if (tmp$ == null) {
+      return;
+    }
+    var validView = tmp$;
+    parent != null ? (parent.removeChild_3bc3y1$(validView), Unit) : null;
   };
-  function Component$view$lambda(this$Component) {
-    return function () {
-      var $receiver = this$Component.getView_art3zr$(detached);
-      $receiver.bind_c4619k$(this$Component);
-      return $receiver;
-    };
-  }
   Component.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Component',
@@ -438,7 +448,6 @@ var kunafa = function (_, Kotlin) {
     View.call(this, parent);
     var tmp$;
     this.element_sz2zzf$_0 = Kotlin.isType(tmp$ = document.createElement('legend'), HTMLLegendElement) ? tmp$ : throwCCE();
-    this.text_39ents$_0 = '';
   }
   Object.defineProperty(Legend.prototype, 'element', {
     get: function () {
@@ -447,10 +456,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(Legend.prototype, 'text', {
     get: function () {
-      return this.text_39ents$_0;
+      return this.element.innerHTML;
     },
     set: function (value) {
-      this.text_39ents$_0 = value;
       this.element.innerHTML = value;
     }
   });
@@ -546,7 +554,6 @@ var kunafa = function (_, Kotlin) {
     var $receiver = Kotlin.isType(tmp$ = document.createElement('input'), HTMLInputElement) ? tmp$ : throwCCE();
     $receiver.type = 'radio';
     this.element_1imld1$_0 = $receiver;
-    this.onChange_elshpg$_0 = null;
   }
   Object.defineProperty(Radio.prototype, 'element', {
     get: function () {
@@ -563,10 +570,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(Radio.prototype, 'onChange', {
     get: function () {
-      return this.onChange_elshpg$_0;
+      return this.element.onchange;
     },
     set: function (value) {
-      this.onChange_elshpg$_0 = value;
       this.element.onchange = value;
     }
   });
@@ -615,7 +621,6 @@ var kunafa = function (_, Kotlin) {
     View.call(this, parent);
     var tmp$;
     this.element_v2k7w0$_0 = Kotlin.isType(tmp$ = document.createElement('td'), HTMLTableCellElement) ? tmp$ : throwCCE();
-    this.text_b3jltx$_0 = '';
   }
   Object.defineProperty(TableCell.prototype, 'element', {
     get: function () {
@@ -624,10 +629,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(TableCell.prototype, 'text', {
     get: function () {
-      return this.text_b3jltx$_0;
+      return this.element.innerHTML;
     },
     set: function (value) {
-      this.text_b3jltx$_0 = value;
       this.element.innerHTML = value;
     }
   });
@@ -642,7 +646,6 @@ var kunafa = function (_, Kotlin) {
     View.call(this, parent);
     var tmp$;
     this.element_bevl7h$_0 = Kotlin.isType(tmp$ = document.createElement('th'), HTMLTableCellElement) ? tmp$ : throwCCE();
-    this.text_xml12g$_0 = '';
   }
   Object.defineProperty(TableHeaderCell.prototype, 'element', {
     get: function () {
@@ -651,10 +654,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(TableHeaderCell.prototype, 'text', {
     get: function () {
-      return this.text_xml12g$_0;
+      return this.element.innerHTML;
     },
     set: function (value) {
-      this.text_xml12g$_0 = value;
       this.element.innerHTML = value;
     }
   });
@@ -720,11 +722,8 @@ var kunafa = function (_, Kotlin) {
     View.call(this, parent);
     var tmp$;
     this.element_vu6gxv$_0 = Kotlin.isType(tmp$ = document.createElement('input'), HTMLInputElement) ? tmp$ : throwCCE();
-    this.placeholder_9l6zos$_0 = '';
-    this.type_x3sm5h$_0 = '';
     this.textSize_kim4zd$_0 = null;
     this.textColor_48pofr$_0 = new Color();
-    this.onChange_v5fyyu$_0 = null;
   }
   Object.defineProperty(TextInput.prototype, 'element', {
     get: function () {
@@ -741,19 +740,17 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(TextInput.prototype, 'placeholder', {
     get: function () {
-      return this.placeholder_9l6zos$_0;
+      return this.element.placeholder;
     },
     set: function (value) {
-      this.placeholder_9l6zos$_0 = value;
       this.element.placeholder = value;
     }
   });
   Object.defineProperty(TextInput.prototype, 'type', {
     get: function () {
-      return this.type_x3sm5h$_0;
+      return this.element.type;
     },
     set: function (value) {
-      this.type_x3sm5h$_0 = value;
       this.element.type = value;
     }
   });
@@ -779,10 +776,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(TextInput.prototype, 'onChange', {
     get: function () {
-      return this.onChange_v5fyyu$_0;
+      return this.element.onchange;
     },
     set: function (value) {
-      this.onChange_v5fyyu$_0 = value;
       this.element.onchange = value;
     }
   });
@@ -849,21 +845,18 @@ var kunafa = function (_, Kotlin) {
     if (parent === void 0)
       parent = null;
     this.parent = parent;
-    this.id_i62tqi$_0 = null;
     var tmp$;
     this.element_5m5ez7$_0 = Kotlin.isType(tmp$ = document.createElement('div'), HTMLDivElement) ? tmp$ : throwCCE();
     this.lifecycleObserversList_vi34z0$_0 = ArrayList_init();
     this.lastLifecycleEvent_308r9b$_0 = null;
     this.isVisible_1i09yf$_0 = true;
-    this.onClick_mypvpi$_0 = null;
     this.children = ArrayList_init();
   }
   Object.defineProperty(View.prototype, 'id', {
     get: function () {
-      return this.id_i62tqi$_0;
+      return this.element.id;
     },
     set: function (value) {
-      this.id_i62tqi$_0 = value;
       if (value != null) {
         this.element.id = value;
       }
@@ -938,10 +931,9 @@ var kunafa = function (_, Kotlin) {
   });
   Object.defineProperty(View.prototype, 'onClick', {
     get: function () {
-      return this.onClick_mypvpi$_0;
+      return this.element.onclick;
     },
     set: function (value) {
-      this.onClick_mypvpi$_0 = value;
       this.element.onclick = value;
     }
   });
@@ -4182,6 +4174,14 @@ var kunafa = function (_, Kotlin) {
   LifecycleEvent.valueOf_61zpoe$ = LifecycleEvent$valueOf;
   function LifecycleObserver() {
   }
+  LifecycleObserver.prototype.viewWillMount_1xffwv$ = function (lifecycleOwner) {
+  };
+  LifecycleObserver.prototype.onViewMounted_1xffwv$ = function (lifecycleOwner) {
+  };
+  LifecycleObserver.prototype.viewWillBeRemoved_1xffwv$ = function (lifecycleOwner) {
+  };
+  LifecycleObserver.prototype.onViewRemoved_1xffwv$ = function (lifecycleOwner) {
+  };
   LifecycleObserver.$metadata$ = {
     kind: Kind_INTERFACE,
     simpleName: 'LifecycleObserver',
@@ -4234,6 +4234,313 @@ var kunafa = function (_, Kotlin) {
     simpleName: 'Observable',
     interfaces: []
   };
+  function Route(meta, segments, component, parentRoute, parentView, referenceView, isExact) {
+    Route$Companion_getInstance();
+    this.meta = meta;
+    this.segments = segments;
+    this.component = component;
+    this.parentRoute = parentRoute;
+    this.parentView = parentView;
+    this.referenceView = referenceView;
+    this.isExact = isExact;
+    this.children_0 = ArrayList_init();
+  }
+  Object.defineProperty(Route.prototype, 'path', {
+    get: function () {
+      return '/' + joinToString(this.segments, '/');
+    }
+  });
+  Route.prototype.update = function () {
+    var tmp$, tmp$_0;
+    var oldPath = this.setupRouterToCurrentRoute_0();
+    var windowSegments = Route$Companion_getInstance().getSegments_61zpoe$(window.location.pathname);
+    if (this.doesMatch_0(windowSegments)) {
+      (tmp$ = this.parentView) != null ? tmp$.mountAfter_6ftq4c$(this.component, this.referenceView) : null;
+      this.updatePathParams_0(windowSegments);
+      var tmp$_1;
+      tmp$_1 = this.children_0.iterator();
+      while (tmp$_1.hasNext()) {
+        var element = tmp$_1.next();
+        element.update();
+      }
+    }
+     else {
+      (tmp$_0 = this.parentView) != null ? tmp$_0.unMount_7bau7r$(this.component) : null;
+    }
+    this.restoreRouterConfig_0(oldPath);
+  };
+  Route.prototype.restoreRouterConfig_0 = function (oldPath) {
+    Router_getInstance().parentRoute = this.parentRoute;
+    Router_getInstance().currentPath = oldPath;
+  };
+  Route.prototype.setupRouterToCurrentRoute_0 = function () {
+    var oldPath = Router_getInstance().currentPath;
+    Router_getInstance().currentPath = this.meta.url;
+    Router_getInstance().parentRoute = this;
+    return oldPath;
+  };
+  var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_q3lmfv$;
+  var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
+  Route.prototype.updatePathParams_0 = function (windowSegments) {
+    var params = LinkedHashMap_init();
+    var tmp$, tmp$_0;
+    var index = 0;
+    tmp$ = this.segments.iterator();
+    loop_label: while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var index_0 = checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0));
+      action$break: do {
+        var tmp$_1, tmp$_2, tmp$_3;
+        if (!Kotlin.isType(item, ParameterSegment))
+          break action$break;
+        var s = Kotlin.isType(tmp$_1 = item, ParameterSegment) ? tmp$_1 : null;
+        var windowSegment = windowSegments.get_za3lpa$(index_0).text;
+        tmp$_3 = (tmp$_2 = s != null ? s.text : null) != null ? tmp$_2 : '';
+        params.put_xwzc9p$(tmp$_3, windowSegment);
+      }
+       while (false);
+    }
+    if (!params.isEmpty()) {
+      this.meta.params.value = params;
+    }
+  };
+  Route.prototype.add_p5wmg3$ = function (route) {
+    this.children_0.add_11rb$(route);
+  };
+  Route.prototype.doesMatch_0 = function (windowSegments) {
+    if (this.isExact) {
+      if (this.segments.size !== windowSegments.size)
+        return false;
+    }
+     else if (this.segments.size > windowSegments.size)
+      return false;
+    var tmp$, tmp$_0;
+    var index = 0;
+    tmp$ = this.segments.iterator();
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      if (!item.matches_vcffh3$(getOrNull(windowSegments, checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)))))
+        return false;
+    }
+    return true;
+  };
+  function Route$Companion() {
+    Route$Companion_instance = this;
+  }
+  function Route$Companion$createRoute$lambda($receiver) {
+    $receiver.isVisible = false;
+    return Unit;
+  }
+  Route$Companion.prototype.createRoute_g1afwu$ = function (parentView, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    var routePath = this.getPath_qz9155$(Router_getInstance().currentPath, path, isAbsolute);
+    var routeSegments = this.getSegments_61zpoe$(routePath);
+    var reference = view(parentView, void 0, Route$Companion$createRoute$lambda);
+    var meta = new RouteMeta(routePath, new Observable());
+    var component = block(meta);
+    var route = new Route(meta, routeSegments, component, Router_getInstance().parentRoute, parentView, reference, isExact);
+    this.addToParent_0(route);
+    route.update();
+    return route;
+  };
+  Route$Companion.prototype.addToParent_0 = function (route) {
+    var tmp$;
+    if (Router_getInstance().parentRoute == null) {
+      Router_getInstance().add_p5wmg3$(route);
+    }
+     else {
+      (tmp$ = Router_getInstance().parentRoute) != null ? (tmp$.add_p5wmg3$(route), Unit) : null;
+    }
+  };
+  Route$Companion.prototype.getPath_qz9155$ = function (currentPath, path, isAbsolute) {
+    var tmp$;
+    var trimmedCurrentPath = trim(currentPath, Kotlin.charArrayOf(47));
+    if (isAbsolute || isBlank(trimmedCurrentPath))
+      tmp$ = '/' + trim(path, Kotlin.charArrayOf(47));
+    else
+      tmp$ = '/' + trimmedCurrentPath + '/' + trim(path, Kotlin.charArrayOf(47));
+    return tmp$;
+  };
+  function Route$Companion$getComponent$ObjectLiteral(closure$block, closure$meta) {
+    this.closure$block = closure$block;
+    this.closure$meta = closure$meta;
+    Component.call(this);
+  }
+  Route$Companion$getComponent$ObjectLiteral.prototype.getView_art3zr$ = function ($receiver) {
+    return this.closure$block($receiver, this.closure$meta);
+  };
+  Route$Companion$getComponent$ObjectLiteral.$metadata$ = {
+    kind: Kind_CLASS,
+    interfaces: [Component]
+  };
+  Route$Companion.prototype.getComponent_99i513$ = function (meta, block) {
+    return new Route$Companion$getComponent$ObjectLiteral(block, meta);
+  };
+  var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
+  Route$Companion.prototype.getSegments_61zpoe$ = function (currentPath) {
+    var $receiver = split(currentPath, Kotlin.charArrayOf(47));
+    var destination = ArrayList_init();
+    var tmp$;
+    tmp$ = $receiver.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      if (!isBlank(element))
+        destination.add_11rb$(element);
+    }
+    var stringSegments = destination;
+    var destination_0 = ArrayList_init_0(collectionSizeOrDefault(stringSegments, 10));
+    var tmp$_0;
+    tmp$_0 = stringSegments.iterator();
+    while (tmp$_0.hasNext()) {
+      var item = tmp$_0.next();
+      var tmp$_1 = destination_0.add_11rb$;
+      var transform$result;
+      if (startsWith_0(item, ':')) {
+        transform$result = new ParameterSegment(trim(item, Kotlin.charArrayOf(58)));
+      }
+       else {
+        transform$result = new RouteSegment(item);
+      }
+      tmp$_1.call(destination_0, transform$result);
+    }
+    return destination_0;
+  };
+  Route$Companion.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Companion',
+    interfaces: []
+  };
+  var Route$Companion_instance = null;
+  function Route$Companion_getInstance() {
+    if (Route$Companion_instance === null) {
+      new Route$Companion();
+    }
+    return Route$Companion_instance;
+  }
+  Route.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Route',
+    interfaces: []
+  };
+  function route$lambda(closure$block) {
+    return function (meta) {
+      return Route$Companion_getInstance().getComponent_99i513$(meta, closure$block);
+    };
+  }
+  function route($receiver, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    return routeComponent($receiver, path, isExact, isAbsolute, route$lambda(block));
+  }
+  function routeComponent($receiver, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    return Route$Companion_getInstance().createRoute_g1afwu$($receiver, path, isExact, isAbsolute, block);
+  }
+  function RouteSegment(text) {
+    this.text = text;
+  }
+  RouteSegment.prototype.matches_vcffh3$ = function (route) {
+    return equals(this.text, route != null ? route.text : null);
+  };
+  RouteSegment.prototype.toString = function () {
+    return this.text;
+  };
+  RouteSegment.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'RouteSegment',
+    interfaces: []
+  };
+  function ParameterSegment(text) {
+    RouteSegment.call(this, text);
+  }
+  ParameterSegment.prototype.matches_vcffh3$ = function (route) {
+    return route != null;
+  };
+  ParameterSegment.prototype.toString = function () {
+    return ':' + this.text;
+  };
+  ParameterSegment.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'ParameterSegment',
+    interfaces: [RouteSegment]
+  };
+  function RouteMeta(url, params) {
+    this.url = url;
+    this.params = params;
+  }
+  RouteMeta.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'RouteMeta',
+    interfaces: []
+  };
+  function link$lambda$lambda(closure$completePath) {
+    return function (it) {
+      it.preventDefault();
+      Router_getInstance().navigateTo_61zpoe$(closure$completePath);
+      return Unit;
+    };
+  }
+  function link$lambda(closure$path, closure$block) {
+    return function ($receiver) {
+      var completePath = Route$Companion_getInstance().getPath_qz9155$(Router_getInstance().currentPath, closure$path, true);
+      $receiver.href = completePath;
+      $receiver.onClick = link$lambda$lambda(completePath);
+      closure$block != null ? closure$block($receiver) : null;
+      return Unit;
+    };
+  }
+  function link($receiver, path, block) {
+    if (block === void 0)
+      block = null;
+    return a($receiver, void 0, link$lambda(path, block));
+  }
+  function Router() {
+    Router_instance = this;
+    window.onpopstate = Router_init$lambda;
+    this.currentPath = '/';
+    this.parentRoute = null;
+    this.rootRoutes_0 = ArrayList_init();
+  }
+  Router.prototype.update_0 = function () {
+    var tmp$;
+    tmp$ = this.rootRoutes_0.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      element.update();
+    }
+  };
+  Router.prototype.add_p5wmg3$ = function (route) {
+    this.rootRoutes_0.add_11rb$(route);
+  };
+  Router.prototype.navigateTo_61zpoe$ = function (path) {
+    window.history.pushState(null, '', '/' + trimStart(path, Kotlin.charArrayOf(47)));
+    Router_getInstance().update_0();
+  };
+  function Router_init$lambda(it) {
+    Router_getInstance().update_0();
+    return Unit;
+  }
+  Router.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Router',
+    interfaces: []
+  };
+  var Router_instance = null;
+  function Router_getInstance() {
+    if (Router_instance === null) {
+      new Router();
+    }
+    return Router_instance;
+  }
   var package$com = _.com || (_.com = {});
   var package$narbase = package$com.narbase || (package$com.narbase = {});
   var package$kunafa = package$narbase.kunafa || (package$narbase.kunafa = {});
@@ -4951,6 +5258,24 @@ var kunafa = function (_, Kotlin) {
   package$lifecycle.LifecycleObserver = LifecycleObserver;
   package$lifecycle.LifecycleOwner = LifecycleOwner;
   package$lifecycle.Observable = Observable;
+  Object.defineProperty(Route, 'Companion', {
+    get: Route$Companion_getInstance
+  });
+  var package$routing = package$core.routing || (package$core.routing = {});
+  package$routing.Route = Route;
+  package$routing.route_2nc5dp$ = route;
+  package$routing.routeComponent_julfhx$ = routeComponent;
+  package$routing.RouteSegment = RouteSegment;
+  package$routing.ParameterSegment = ParameterSegment;
+  package$routing.RouteMeta = RouteMeta;
+  package$routing.link_6xqxb6$ = link;
+  Object.defineProperty(package$routing, 'Router', {
+    get: Router_getInstance
+  });
+  Component.prototype.viewWillMount_1xffwv$ = LifecycleObserver.prototype.viewWillMount_1xffwv$;
+  Component.prototype.onViewMounted_1xffwv$ = LifecycleObserver.prototype.onViewMounted_1xffwv$;
+  Component.prototype.viewWillBeRemoved_1xffwv$ = LifecycleObserver.prototype.viewWillBeRemoved_1xffwv$;
+  Component.prototype.onViewRemoved_1xffwv$ = LifecycleObserver.prototype.onViewRemoved_1xffwv$;
   detached = null;
   color = new RuleDelegate('color');
   opacity = new RuleDelegate('opacity');
