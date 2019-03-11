@@ -58,6 +58,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     (new App()).setup();
   }
   function App() {
+    this.pageViewController = new PageViewController();
   }
   function App$setup$lambda$lambda$lambda($receiver) {
     set_padding($receiver, get_px(16).toString());
@@ -177,20 +178,50 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   function App$setup$lambda$lambda$lambda_3($receiver, it) {
     return verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda$lambda_4);
   }
-  function App$setup$lambda$lambda($receiver) {
-    $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda);
-    verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_0);
-    route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda_1);
-    route($receiver, '/about', void 0, void 0, App$setup$lambda$lambda$lambda_2);
-    route($receiver, '/topics', void 0, void 0, App$setup$lambda$lambda$lambda_3);
+  function App$setup$lambda$lambda$lambda$lambda_5($receiver) {
+    $receiver.text = 'Login';
     return Unit;
   }
-  function App$setup$lambda($receiver) {
-    verticalLayout($receiver, void 0, App$setup$lambda$lambda);
+  function App$setup$lambda$lambda$lambda$lambda_6($receiver) {
+    $receiver.text = 'Dashboard';
     return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_4($receiver) {
+    link($receiver, '/login', void 0, App$setup$lambda$lambda$lambda$lambda_5);
+    link($receiver, '/dashboard', void 0, App$setup$lambda$lambda$lambda$lambda_6);
+    return Unit;
+  }
+  function App$setup$lambda$lambda$lambda_5(this$App) {
+    return function (it) {
+      return new LoginComponent(new LoginPageViewController(this$App.pageViewController));
+    };
+  }
+  function App$setup$lambda$lambda$lambda_6(this$App) {
+    return function (it) {
+      return new DashboardPage(this$App.pageViewController);
+    };
+  }
+  function App$setup$lambda$lambda(this$App) {
+    return function ($receiver) {
+      $receiver.style_cjs1gm$(App$setup$lambda$lambda$lambda);
+      verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_0);
+      route($receiver, '/', true, void 0, App$setup$lambda$lambda$lambda_1);
+      route($receiver, '/about', void 0, void 0, App$setup$lambda$lambda$lambda_2);
+      route($receiver, '/topics', void 0, void 0, App$setup$lambda$lambda$lambda_3);
+      verticalLayout($receiver, void 0, App$setup$lambda$lambda$lambda_4);
+      routeComponent($receiver, '/login', void 0, void 0, App$setup$lambda$lambda$lambda_5(this$App));
+      routeComponent($receiver, '/dashboard', void 0, void 0, App$setup$lambda$lambda$lambda_6(this$App));
+      return Unit;
+    };
+  }
+  function App$setup$lambda(this$App) {
+    return function ($receiver) {
+      verticalLayout($receiver, void 0, App$setup$lambda$lambda(this$App));
+      return Unit;
+    };
   }
   App.prototype.setup = function () {
-    page(void 0, App$setup$lambda);
+    page(void 0, App$setup$lambda(this));
   };
   App.$metadata$ = {
     kind: Kind_CLASS,
@@ -709,11 +740,23 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     simpleName: 'Route',
     interfaces: []
   };
-  function route$lambda($receiver) {
+  function route$lambda(closure$block) {
+    return function (meta) {
+      return getComponent(meta, closure$block);
+    };
+  }
+  function route($receiver, path, isExact, isAbsolute, block) {
+    if (isExact === void 0)
+      isExact = false;
+    if (isAbsolute === void 0)
+      isAbsolute = false;
+    return routeComponent($receiver, path, isExact, isAbsolute, route$lambda(block));
+  }
+  function routeComponent$lambda($receiver) {
     $receiver.isVisible = false;
     return Unit;
   }
-  function route($receiver, path, isExact, isAbsolute, block) {
+  function routeComponent($receiver, path, isExact, isAbsolute, block) {
     if (isExact === void 0)
       isExact = false;
     if (isAbsolute === void 0)
@@ -723,9 +766,9 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     Router_getInstance().currentPath = routePath;
     var routeSegments = getSegments(Router_getInstance().currentPath);
     var parentRoute = Router_getInstance().currentRoute;
-    var reference = view($receiver, void 0, route$lambda);
+    var reference = view($receiver, void 0, routeComponent$lambda);
     var meta = new RouteMeta(Router_getInstance().currentPath, new Observable());
-    var component = getComponent(meta, block);
+    var component = block(meta);
     var route = new Route(meta, routeSegments, component, parentRoute, $receiver, reference, isExact);
     if (parentRoute == null) {
       Router_getInstance().add_20tn11$(route);
@@ -897,7 +940,8 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   package$kuntut.LoginComponent = LoginComponent;
   package$kuntut.TextWithLabelComponent = TextWithLabelComponent;
   package$kuntut.Route = Route;
-  package$kuntut.route_kijlnq$ = route;
+  package$kuntut.route_4y6kih$ = route;
+  package$kuntut.routeComponent_lmcbhh$ = routeComponent;
   package$kuntut.getPath_8kj6y5$ = getPath;
   package$kuntut.getSegments_61zpoe$ = getSegments;
   package$kuntut.getComponent_swacdx$ = getComponent;

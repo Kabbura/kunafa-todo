@@ -18,6 +18,7 @@ fun main(args: Array<String>) {
 }
 
 class App() {
+    val pageViewController = PageViewController()
     fun setup() {
         page {
             verticalLayout {
@@ -50,6 +51,7 @@ class App() {
                         }
                     }
                 }
+
                 route("/about") {
                     verticalLayout {
                         style {
@@ -107,11 +109,26 @@ class App() {
                             myTextView
                         }
 
-
-
                     }
 
                 }
+
+                verticalLayout {
+                    link("/login") {
+                        text = "Login"
+                    }
+                    link("/dashboard") {
+                        text = "Dashboard"
+                    }
+                }
+                routeComponent("/login") {
+                    LoginComponent(LoginPageViewController(pageViewController))
+                }
+
+                routeComponent("/dashboard") {
+                    DashboardPage(pageViewController)
+                }
+
 
             }
         }

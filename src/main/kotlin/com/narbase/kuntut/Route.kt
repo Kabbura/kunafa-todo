@@ -80,15 +80,20 @@ class Route(
     }
 }
 
-fun View?.route(
+fun View.route(
     path: String,
     isExact: Boolean = false,
     isAbsolute: Boolean = false,
     block: View?.(meta: RouteMeta) -> View
+) = routeComponent(path, isExact, isAbsolute) { meta ->  getComponent(meta, block) }
+
+fun View.routeComponent(
+    path: String,
+    isExact: Boolean = false,
+    isAbsolute: Boolean = false,
+    block: (meta: RouteMeta) -> Component
 ): Route {
     val oldPath = Router.currentPath
-
-
     val routePath = getPath(isAbsolute, path)
 
     Router.currentPath = routePath
@@ -97,7 +102,7 @@ fun View?.route(
 
     val reference = view { isVisible = false }
     val meta = RouteMeta(Router.currentPath, Observable())
-    val component = getComponent(meta, block)
+    val component = block(meta)
     val route = Route(meta, routeSegments, component, parentRoute, this, reference, isExact)
     if (parentRoute == null) {
         Router.add(route)
