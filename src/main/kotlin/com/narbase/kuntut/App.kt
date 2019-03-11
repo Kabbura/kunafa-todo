@@ -67,7 +67,7 @@ class App() {
                     }
 
                 }
-                route("/topics") {
+                route("/topics") { meta ->
                     verticalLayout {
                         style {
                             borderRadius = 4.px.toString()
@@ -80,13 +80,13 @@ class App() {
                             text = "Topics"
                         }
 
-                        link("/rendering") {
+                        link("${meta.url}/rendering") {
                             text = "Rendering with React"
                         }
-                        link("/components") {
+                        link("${meta.url}/components") {
                             text = "Components"
                         }
-                        link("/props-v-state") {
+                        link("${meta.url}/props-v-state") {
                             text = "Props v. State"
                         }
 

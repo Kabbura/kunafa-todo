@@ -28,10 +28,10 @@ class Route(
     private val children = mutableListOf<Route>()
 
     val path
-        get() = "/${segments.joinToString("/", transform = { it.text })}"
+        get() = "/${segments.joinToString("/")}"
 
     fun update() {
-        console.log("Route pathToMatch: $path, window: ${window.location.pathname}")
+//        console.log("Route pathToMatch: $path, window: ${window.location.pathname}")
         val windowSegments = getSegments(window.location.pathname)
         if (doesMatch(windowSegments)) {
             Router.currentRoute = this
@@ -54,7 +54,6 @@ class Route(
                 if ((segment is ParameterSegment).not())
                     return@forEachIndexed
                 val s = segment as? ParameterSegment
-                console.log("ParameterSegment: ${s?.text}")
                 val windowSegment = windowSegments[index].text
                 params[s?.text ?: ""] = windowSegment
             }
@@ -78,6 +77,45 @@ class Route(
         }
         return true
     }
+
+    companion object {
+        fun createRoute(
+            parentView: View,
+            path: String,
+            isExact: Boolean = false,
+            isAbsolute: Boolean = false,
+            block: (meta: RouteMeta) -> Component
+        ): Route {
+            val oldPath = Router.currentPath
+            val routePath = getPath(path, isAbsolute)
+
+            Router.currentPath = routePath
+            val routeSegments = getSegments(Router.currentPath)
+            val parentRoute = Router.currentRoute
+
+            val reference = parentView.view { isVisible = false }
+            val meta = RouteMeta(Router.currentPath, Observable())
+            val component = block(meta)
+            val route = Route(meta, routeSegments, component, parentRoute, parentView, reference, isExact)
+            if (parentRoute == null) {
+                Router.add(route)
+            } else {
+                parentRoute.add(route)
+            }
+            route.update()
+            Router.currentPath = oldPath
+            return route
+        }
+
+        fun getPath(path: String, isAbsolute: Boolean): String {
+            val trimmedCurrentPath = Router.currentPath.trim('/')
+            return when {
+                isAbsolute || trimmedCurrentPath.isBlank() -> "/${path.trim('/')}"
+                else -> "/$trimmedCurrentPath/${path.trim('/')}"
+            }
+        }
+
+    }
 }
 
 fun View.route(
@@ -85,42 +123,15 @@ fun View.route(
     isExact: Boolean = false,
     isAbsolute: Boolean = false,
     block: View?.(meta: RouteMeta) -> View
-) = routeComponent(path, isExact, isAbsolute) { meta ->  getComponent(meta, block) }
+) = routeComponent(path, isExact, isAbsolute) { meta -> getComponent(meta, block) }
 
 fun View.routeComponent(
     path: String,
     isExact: Boolean = false,
     isAbsolute: Boolean = false,
     block: (meta: RouteMeta) -> Component
-): Route {
-    val oldPath = Router.currentPath
-    val routePath = getPath(isAbsolute, path)
+): Route = Route.createRoute(this, path, isExact, isAbsolute, block)
 
-    Router.currentPath = routePath
-    val routeSegments = getSegments(Router.currentPath)
-    val parentRoute = Router.currentRoute
-
-    val reference = view { isVisible = false }
-    val meta = RouteMeta(Router.currentPath, Observable())
-    val component = block(meta)
-    val route = Route(meta, routeSegments, component, parentRoute, this, reference, isExact)
-    if (parentRoute == null) {
-        Router.add(route)
-    } else {
-        parentRoute.add(route)
-    }
-    route.update()
-    Router.currentPath = oldPath
-    return route
-}
-
- fun getPath(isAbsolute: Boolean, path: String): String {
-    val trimmedCurrentPath = Router.currentPath.trim('/')
-    return when {
-        isAbsolute || trimmedCurrentPath.isBlank() -> "/${path.trim('/')}"
-        else -> "/$trimmedCurrentPath/${path.trim('/')}"
-    }
-}
 
 fun getSegments(currentPath: String): List<RouteSegment> {
     val stringSegments = currentPath.split('/').filter { it.isNotBlank() }
@@ -137,24 +148,20 @@ fun getComponent(meta: RouteMeta, block: View?.(meta: RouteMeta) -> View): Compo
     override fun View?.getView() = block(meta)
 }
 
-open class RouteSegment(
-    val text: String
-) {
+open class RouteSegment(val text: String) {
     open fun matches(route: RouteSegment?) = text == route?.text
+    override fun toString() = text
 }
 
 class ParameterSegment(text: String) : RouteSegment(text) {
-    var param: String? = null
     override fun matches(route: RouteSegment?) = route != null
+    override fun toString() = ":$text"
 }
 
-class RouteMeta(
-    val url: String,
-    val params: Observable<Map<String, String>>
-)
+class RouteMeta(val url: String, val params: Observable<Map<String, String>>)
 
-fun View?.link(path: String, isAbsolute: Boolean = false, block: (Anchor.() -> Unit)? = null) = a {
-    val completePath = getPath(isAbsolute, path)
+fun View?.link(path: String, block: (Anchor.() -> Unit)? = null) = a {
+    val completePath = Route.getPath(path, isAbsolute = true)
     href = completePath
     onClick = {
         it.preventDefault()
