@@ -467,12 +467,12 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   TodoItem.prototype.markDone = function () {
     var tmp$, tmp$_0;
     (tmp$ = this.checkboxView_0) != null ? (tmp$.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().circleDone), Unit) : null;
-    (tmp$_0 = this.todoTextView_0) != null ? (tmp$_0.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().textStroked), Unit) : null;
+    (tmp$_0 = this.todoTextView_0) != null ? (tmp$_0.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().textDone), Unit) : null;
   };
   TodoItem.prototype.markUndone = function () {
     var tmp$, tmp$_0;
     (tmp$ = this.checkboxView_0) != null ? (tmp$.removeRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().circleDone), Unit) : null;
-    (tmp$_0 = this.todoTextView_0) != null ? (tmp$_0.removeRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().textStroked), Unit) : null;
+    (tmp$_0 = this.todoTextView_0) != null ? (tmp$_0.removeRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().textDone), Unit) : null;
   };
   function TodoItem$Companion() {
     TodoItem$Companion_instance = this;
@@ -481,22 +481,24 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     TodoItem$Companion$Style_instance = this;
     this.circleBasic = classRuleSet(void 0, TodoItem$Companion$Style$circleBasic$lambda);
     this.circleDone = classRuleSet(void 0, TodoItem$Companion$Style$circleDone$lambda);
-    this.textStroked = classRuleSet(void 0, TodoItem$Companion$Style$textStroked$lambda);
+    this.textDone = classRuleSet(void 0, TodoItem$Companion$Style$textDone$lambda);
   }
   function TodoItem$Companion$Style$circleBasic$lambda($receiver) {
-    set_width($receiver, get_px(16));
-    set_height($receiver, get_px(16));
-    set_borderRadius($receiver, get_px(16).toString());
-    set_border($receiver, '1px solid #000');
+    set_width($receiver, get_px(8));
+    set_height($receiver, get_px(8));
+    set_borderRadius($receiver, get_px(8).toString());
+    set_border($receiver, '1px solid #888');
     set_marginRight($receiver, get_px(8));
     return Unit;
   }
   function TodoItem$Companion$Style$circleDone$lambda($receiver) {
-    set_backgroundColor($receiver, Color.Companion.black);
+    set_backgroundColor($receiver, Color_init(100, 240, 100));
+    set_border($receiver, '1px solid ' + Color_init(100, 240, 100).toCss());
     return Unit;
   }
-  function TodoItem$Companion$Style$textStroked$lambda($receiver) {
+  function TodoItem$Companion$Style$textDone$lambda($receiver) {
     set_textDecoration($receiver, 'line-through');
+    set_color($receiver, Color_init_0('#ccc'));
     return Unit;
   }
   TodoItem$Companion$Style.$metadata$ = {

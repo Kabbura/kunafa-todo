@@ -226,28 +226,30 @@ class TodoItem(
 
     fun markDone() {
         checkboxView?.addRuleSet(Style.circleDone)
-        todoTextView?.addRuleSet(Style.textStroked)
+        todoTextView?.addRuleSet(Style.textDone)
     }
 
     fun markUndone() {
         checkboxView?.removeRuleSet(Style.circleDone)
-        todoTextView?.removeRuleSet(Style.textStroked)
+        todoTextView?.removeRuleSet(Style.textDone)
     }
 
     companion object {
         object Style {
             val circleBasic = classRuleSet {
-                width = 16.px
-                height = 16.px
-                borderRadius = 16.px.toString()
-                border = "1px solid #000"
+                width = 8.px
+                height = 8.px
+                borderRadius = 8.px.toString()
+                border = "1px solid #888"
                 marginRight = 8.px
             }
             val circleDone = classRuleSet {
-                backgroundColor = Color.black
+                backgroundColor = Color(100, 240, 100)
+                border = "1px solid ${Color(100, 240, 100).toCss()}"
             }
-            val textStroked = classRuleSet {
+            val textDone = classRuleSet {
                 textDecoration = "line-through"
+                color = Color("#ccc")
             }
         }
     }
