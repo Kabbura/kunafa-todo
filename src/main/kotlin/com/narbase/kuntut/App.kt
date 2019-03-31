@@ -84,7 +84,7 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
                 text = "Kunafa Todo"
                 style {
                     fontSize = 32.px
-                    color = Color(100,240, 100)
+                    color = Color(100, 240, 100)
                 }
             }
 
@@ -177,25 +177,14 @@ data class TodoPm(val text: String, var isDone: Boolean = false) {
 class TodoItem(
     private val todoPm: TodoPm,
     private val onDeleteClicked: (id: Int) -> Unit,
-    private val onCheckboxClicked: (id: Int) -> Unit
+    private val onToggleState: (id: Int) -> Unit
 ) : Component() {
 
     private var checkboxView: View? = null
     private var todoTextView: TextView? = null
     override fun View?.getView() = horizontalLayout {
-        style {
-            width = matchParent
-            border = "1px solid #d4d4d4"
-            marginTop = 8.px
-            padding = 8.px.toString()
-            alignItems = Alignment.Center
-            cursor = "pointer"
-            backgroundColor = Color.white
-            hover {
-                boxShadow = "0px 4px 3px #bbb"
-            }
-        }
-        onClick = { onCheckboxClicked(todoPm.id) }
+        addRuleSet(Style.rootLayout)
+        onClick = { onToggleState(todoPm.id) }
 
         checkboxView = view {
             addRuleSet(Style.circleBasic)
@@ -210,17 +199,7 @@ class TodoItem(
         button {
             text = "Delete"
             onClick = { onDeleteClicked(todoPm.id) }
-            style {
-                borderRadius = 4.px.toString()
-                backgroundColor = Color(230, 100, 100)
-                color = Color.white
-                padding = 4.px.toString()
-                border = "none"
-                cursor = "pointer"
-                hover {
-                    backgroundColor = Color(240, 40, 40)
-                }
-            }
+            addRuleSet(Style.deleteButtonStyle)
         }
     }
 
@@ -250,6 +229,29 @@ class TodoItem(
             val textDone = classRuleSet {
                 textDecoration = "line-through"
                 color = Color("#ccc")
+            }
+            val deleteButtonStyle = classRuleSet {
+                borderRadius = 4.px.toString()
+                backgroundColor = Color(230, 100, 100)
+                color = Color.white
+                padding = 4.px.toString()
+                border = "none"
+                cursor = "pointer"
+                hover {
+                    backgroundColor = Color(240, 40, 40)
+                }
+            }
+            val rootLayout = classRuleSet {
+                width = matchParent
+                border = "1px solid #d4d4d4"
+                marginTop = 8.px
+                padding = 8.px.toString()
+                alignItems = Alignment.Center
+                cursor = "pointer"
+                backgroundColor = Color.white
+                hover {
+                    boxShadow = "0px 4px 3px #bbb"
+                }
             }
         }
     }
