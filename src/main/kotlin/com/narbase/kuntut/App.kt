@@ -1,5 +1,16 @@
 package com.narbase.kuntut
 
+import com.narbase.kunafa.core.components.*
+import com.narbase.kunafa.core.components.layout.LinearLayout
+import com.narbase.kunafa.core.css.*
+import com.narbase.kunafa.core.dimensions.dependent.matchParent
+import com.narbase.kunafa.core.dimensions.dependent.weightOf
+import com.narbase.kunafa.core.dimensions.px
+import com.narbase.kunafa.core.drawable.Color
+import com.narbase.kunafa.core.lifecycle.LifecycleOwner
+import com.narbase.kunafa.core.lifecycle.Observable
+import org.w3c.dom.events.KeyboardEvent
+
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
@@ -9,271 +20,235 @@ package com.narbase.kuntut
  * On: 2019/03/05.
  */
 
-import com.narbase.kunafa.core.components.*
-import com.narbase.kunafa.core.css.*
-import com.narbase.kunafa.core.dimensions.dependent.matchParent
-import com.narbase.kunafa.core.dimensions.px
-import com.narbase.kunafa.core.drawable.Color
-import com.narbase.kunafa.core.lifecycle.LifecycleOwner
-import com.narbase.kunafa.core.routing.*
-
 fun main(args: Array<String>) {
-    App().setup()
-}
-
-class App() {
-    val pageViewController = PageViewController()
-
-
-    fun setup() {
-        page {
-            verticalLayout {
-                style {
-                    width = matchParent
-                    margin = 32.px.toString()
-                }
-                verticalLayout {
-                    button {
-                        text ="Navigate to about"
-                        onClick = {
-                            Router.navigateTo("/about")
-                        }
-                    }
-
-                    link("/") {
-                        text = "Home"
-                    }
-                    link("/about") {
-                        text = "About"
-                    }
-                    link("/topics") {
-                        text = "Topics"
-                    }
-                }
-
-                view {
-                    style {
-                        backgroundColor = Color("aaa")
-                        width = matchParent
-                        height = 1.px
-                        marginTop = 32.px
-                        marginBottom = 32.px
-                    }
-                }
-
-                route("/", isExact = true) {
-                    textView {
-                        text = "Home"
-                        style {
-                            this["width"] = 4.px.toString()
-                        }
-                    }
-                }
-
-                route("/about") {
-                    verticalLayout {
-                        textView {
-                            text = "About"
-                        }
-
-                        link("/about/us") {
-                            text = "Go to us"
-                        }
-
-
-                        route("/us") {
-
-                            verticalLayout {
-
-                                textView {
-                                    text = "Us"
-                                }
-
-                                link("/about/us/1") {
-                                    text = "Go to 1"
-                                }
-
-                                route("/1") {
-                                    textView {
-                                        text = "1"
-                                    }
-                                }
-                            }
-
-
-                        }
-
-                        route("/contact") {
-                            textView {
-                                text = "Us"
-                            }
-                        }
-                    }
-                }
-
-                route("/topics") { meta ->
-                    verticalLayout {
-                        textView {
-                            text = "Topics"
-                        }
-
-                        verticalLayout {
-
-                            link("${meta.url}/islam") {
-                                text = "Islam"
-                            }
-                            link("${meta.url}/ayman") {
-                                text = "Ayman"
-                            }
-                            link("${meta.url}/ahmed") {
-                                text = "Ahmed"
-                            }
-                        }
-
-                        route("/", isExact = true) {
-                            textView {
-                                text = "Please select a topic"
-                            }
-                        }
-
-
-                        routeComponent("/:topicParam") { meta ->
-                            TopicDetailsComponent(meta)
-                        }
-                    }
-                }
-            }
-        }
+    page {
+        mount(TodoComponent(TodoViewModel()))
     }
 }
 
+class TodoComponent(private val viewModel: TodoViewModel) : Component() {
 
-class TopicDetailsComponent(val meta: RouteMeta) : Component() {
+    private val todoViews = mutableMapOf<Int, TodoItem>()
+
+    private var listLayout: LinearLayout? = null
+    private var todoTextInput: TextInput? = null
+
 
     override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
-        meta.params.observe { params ->
-            topicNameTextView?.text = params?.get("topicParam") ?: ""
+        viewModel.onItemAdded.observe(::addItem)
+        viewModel.onItemDeleted.observe(::deleteItem)
+        viewModel.onItemUpdated.observe(::updateItem)
+    }
 
+    private fun addItem(pm: TodoPm?) {
+        pm ?: return
+        val component = TodoItem(pm, viewModel::deleteItem, viewModel::toggleItemStatus)
+        listLayout?.mount(component)
+        todoViews[pm.id] = component
+    }
+
+    private fun deleteItem(pm: TodoPm?) {
+        pm ?: return
+        val component = todoViews[pm.id] ?: return
+        listLayout?.unMount(component)
+        todoViews.remove(pm.id)
+    }
+
+    private fun updateItem(pm: TodoPm?) {
+        pm ?: return
+        val component = todoViews[pm.id] ?: return
+        if (pm.isDone) {
+            component.markDone()
+        } else {
+            component.markUndone()
         }
     }
 
-    var topicNameTextView: TextView? = null
-    override fun View?.getView() = verticalLayout {
-        textView {
-            text = "Inside Topic dDetails component"
-        }
-        topicNameTextView = textView {
+    override fun View?.getView() = horizontalLayout {
+        style {
+            width = matchParent
+            height = matchParent
         }
 
-    }
-}
+        verticalLayout {
+            style {
+                width = weightOf(1)
+                minWidth = 200.px
+                height = matchParent
+                backgroundColor = Color.white
+                padding = 32.px.toString()
+                alignItems = Alignment.Center
+            }
 
-class App2 {
-    fun setup() {
-        page {
-            id = "page"
-
-            verticalLayout {
-                verticalLayout {
-                    style {
-                        margin = 8.px.toString()
-                        padding = 8.px.toString()
-                    }
-                    link("/") {
-                        text = "Home"
-                    }
-
-                    link("/about") {
-                        text = "About"
-                    }
-
-                    link("/topics") {
-                        text = "Topics"
-                    }
-
-
-                }
-                route("/", isExact = true) {
-                    verticalLayout {
-                        textView {
-                            text = "Home"
-                        }
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
-                        }
-                    }
-                }
-
-                route("/about") {
-                    verticalLayout {
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
-                        }
-                        textView {
-                            text = "About"
-
-                        }
-                    }
-                }
-
-                route("/topics") { meta ->
-                    verticalLayout {
-                        style {
-                            borderRadius = 4.px.toString()
-                            border = "1px solid #d4d4d4"
-                            margin = 8.px.toString()
-                            padding = 8.px.toString()
-                        }
-                        textView {
-                            text = "Topics"
-                        }
-                        link("/rendering") {
-                            text = "Rendering with React"
-                        }
-
-                        link("/components") {
-                            text = "Components"
-                        }
-
-                        link("/props-v-state") {
-                            text = "Props v. State"
-                        }
-
-                        route("/:topic") { meta ->
-                            verticalLayout {
-                                style {
-                                    borderRadius = 4.px.toString()
-                                    border = "1px solid #d4d4d4"
-                                    margin = 8.px.toString()
-                                    padding = 8.px.toString()
-                                }
-                                val text = textView {
-
-                                }
-
-                                meta.params.observe { params ->
-                                    text.text = params?.getOrElse("topic") { "No value" } ?: "No value"
-                                }
-                            }
-                        }
-                        route("/", isExact = true) {
-                            textView {
-                                text = "Please select a topic"
-                            }
-
-                        }
-
-                    }
+            textView {
+                text = "Kunafa Todo"
+                style {
+                    fontSize = 32.px
+                    color = Color(100,240, 100)
                 }
             }
 
-//            mount(PageComponent(PageViewController()))
+            todoTextInput = textInput {
+                style {
+                    width = matchParent
+                    backgroundColor = Color("#fafafa")
+                    border = "1px solid #efefef"
+                    padding = 8.px.toString()
+                    borderRadius = 4.px.toString()
+                    marginTop = 16.px
+                }
+                element.addEventListener("keypress", { e ->
+                    if ((e as? KeyboardEvent)?.keyCode == 13) {
+                        onButtonClicked()
+                    }
+                })
+            }
+            button {
+                id = "myButton"
+                text = "Add to do"
+                style {
+                    marginTop = 16.px
+                }
+                onClick = {
+                    onButtonClicked()
+                }
+            }
+        }
+
+        verticalScrollLayout {
+            style {
+                width = weightOf(2)
+                height = matchParent
+                backgroundColor = Color("#ededed")
+            }
+
+            listLayout = verticalLayout {
+                style {
+                    width = matchParent
+                    height = matchParent
+                    padding = 8.px.toString()
+                }
+            }
+        }
+    }
+
+    private fun onButtonClicked() {
+        viewModel.addNewTodo(todoTextInput?.text)
+        todoTextInput?.text = ""
+    }
+}
+
+class TodoViewModel {
+    val onItemAdded = Observable<TodoPm>()
+    val onItemDeleted = Observable<TodoPm>()
+    val onItemUpdated = Observable<TodoPm>()
+
+    private val todoItemsList = mutableListOf<TodoPm>()
+
+    fun addNewTodo(todoText: String?) {
+        if (todoText.isNullOrBlank()) return
+        val pm = TodoPm(todoText)
+        todoItemsList.add(pm)
+        onItemAdded.value = pm
+    }
+
+    fun deleteItem(id: Int) {
+        val item = todoItemsList.find { it.id == id } ?: return
+        onItemDeleted.value = item
+        todoItemsList.remove(item)
+    }
+
+    fun toggleItemStatus(id: Int) {
+        val item = todoItemsList.find { it.id == id } ?: return
+        item.isDone = item.isDone.not()
+        onItemUpdated.value = item
+    }
+}
+
+data class TodoPm(val text: String, var isDone: Boolean = false) {
+    val id: Int = nextId
+
+    companion object {
+        private var nextId = 0
+            get() = field++
+    }
+}
+
+class TodoItem(
+    private val todoPm: TodoPm,
+    private val onDeleteClicked: (id: Int) -> Unit,
+    private val onCheckboxClicked: (id: Int) -> Unit
+) : Component() {
+
+    private var checkboxView: View? = null
+    private var todoTextView: TextView? = null
+    override fun View?.getView() = horizontalLayout {
+        style {
+            width = matchParent
+            border = "1px solid #d4d4d4"
+            marginTop = 8.px
+            padding = 8.px.toString()
+            alignItems = Alignment.Center
+            cursor = "pointer"
+            backgroundColor = Color.white
+            hover {
+                boxShadow = "0px 4px 3px #bbb"
+            }
+        }
+        onClick = { onCheckboxClicked(todoPm.id) }
+
+        checkboxView = view {
+            addRuleSet(Style.circleBasic)
+        }
+        todoTextView = textView {
+            style {
+                width = weightOf(1)
+                fontSize = 16.px
+            }
+            text = todoPm.text
+        }
+        button {
+            text = "Delete"
+            onClick = { onDeleteClicked(todoPm.id) }
+            style {
+                borderRadius = 4.px.toString()
+                backgroundColor = Color(230, 100, 100)
+                color = Color.white
+                padding = 4.px.toString()
+                border = "none"
+                cursor = "pointer"
+                hover {
+                    backgroundColor = Color(240, 40, 40)
+                }
+            }
+        }
+    }
+
+    fun markDone() {
+        checkboxView?.addRuleSet(Style.circleDone)
+        todoTextView?.addRuleSet(Style.textStroked)
+    }
+
+    fun markUndone() {
+        checkboxView?.removeRuleSet(Style.circleDone)
+        todoTextView?.removeRuleSet(Style.textStroked)
+    }
+
+    companion object {
+        object Style {
+            val circleBasic = classRuleSet {
+                width = 16.px
+                height = 16.px
+                borderRadius = 16.px.toString()
+                border = "1px solid #000"
+                marginRight = 8.px
+            }
+            val circleDone = classRuleSet {
+                backgroundColor = Color.black
+            }
+            val textStroked = classRuleSet {
+                textDecoration = "line-through"
+            }
         }
     }
 }

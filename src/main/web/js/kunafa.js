@@ -33,8 +33,8 @@ var kunafa = function (_, Kotlin) {
   var trimStart = Kotlin.kotlin.text.trimStart_wqw3xr$;
   Anchor.prototype = Object.create(View.prototype);
   Anchor.prototype.constructor = Anchor;
-  ButtonView.prototype = Object.create(View.prototype);
-  ButtonView.prototype.constructor = ButtonView;
+  Button.prototype = Object.create(View.prototype);
+  Button.prototype.constructor = Button;
   Checkbox.prototype = Object.create(View.prototype);
   Checkbox.prototype.constructor = Checkbox;
   Form.prototype = Object.create(View.prototype);
@@ -71,8 +71,6 @@ var kunafa = function (_, Kotlin) {
   UList.prototype.constructor = UList;
   ListItem.prototype = Object.create(View.prototype);
   ListItem.prototype.constructor = ListItem;
-  AnchorLayout.prototype = Object.create(View.prototype);
-  AnchorLayout.prototype.constructor = AnchorLayout;
   LinearLayout$Orientation.prototype = Object.create(Enum.prototype);
   LinearLayout$Orientation.prototype.constructor = LinearLayout$Orientation;
   LinearLayout.prototype = Object.create(View.prototype);
@@ -140,19 +138,19 @@ var kunafa = function (_, Kotlin) {
     simpleName: 'Anchor',
     interfaces: [View]
   };
-  function ButtonView(parent) {
+  function Button(parent) {
     if (parent === void 0)
       parent = null;
     View.call(this, parent);
     var tmp$;
-    this.element_aq6hvj$_0 = Kotlin.isType(tmp$ = document.createElement('button'), HTMLButtonElement) ? tmp$ : throwCCE();
+    this.element_l7py3e$_0 = Kotlin.isType(tmp$ = document.createElement('button'), HTMLButtonElement) ? tmp$ : throwCCE();
   }
-  Object.defineProperty(ButtonView.prototype, 'element', {
+  Object.defineProperty(Button.prototype, 'element', {
     get: function () {
-      return this.element_aq6hvj$_0;
+      return this.element_l7py3e$_0;
     }
   });
-  Object.defineProperty(ButtonView.prototype, 'text', {
+  Object.defineProperty(Button.prototype, 'text', {
     get: function () {
       return this.element.textContent;
     },
@@ -160,9 +158,9 @@ var kunafa = function (_, Kotlin) {
       this.element.textContent = value;
     }
   });
-  ButtonView.$metadata$ = {
+  Button.$metadata$ = {
     kind: Kind_CLASS,
-    simpleName: 'ButtonView',
+    simpleName: 'Button',
     interfaces: [View]
   };
   function Checkbox(parent) {
@@ -267,20 +265,15 @@ var kunafa = function (_, Kotlin) {
       lifecycleObserver = null;
     return visit(new LinearLayout($receiver, LinearLayout$Orientation$Horizontal_getInstance()), lifecycleObserver, block);
   }
-  function horizontalScrollView($receiver, lifecycleObserver, block) {
+  function horizontalScrollLayout($receiver, lifecycleObserver, block) {
     if (lifecycleObserver === void 0)
       lifecycleObserver = null;
     return visit(new ScrollView($receiver, LinearLayout$Orientation$Horizontal_getInstance()), lifecycleObserver, block);
   }
-  function verticalScrollView($receiver, lifecycleObserver, block) {
+  function verticalScrollLayout($receiver, lifecycleObserver, block) {
     if (lifecycleObserver === void 0)
       lifecycleObserver = null;
     return visit(new ScrollView($receiver, LinearLayout$Orientation$Vertical_getInstance()), lifecycleObserver, block);
-  }
-  function anchorLayout($receiver, lifecycleObserver, block) {
-    if (lifecycleObserver === void 0)
-      lifecycleObserver = null;
-    return visit(new AnchorLayout($receiver), lifecycleObserver, block);
   }
   function view($receiver, lifecycleObserver, block) {
     if (lifecycleObserver === void 0)
@@ -305,7 +298,7 @@ var kunafa = function (_, Kotlin) {
   function button($receiver, lifecycleObserver, block) {
     if (lifecycleObserver === void 0)
       lifecycleObserver = null;
-    return visit(new ButtonView($receiver), lifecycleObserver, block);
+    return visit(new Button($receiver), lifecycleObserver, block);
   }
   function imageView($receiver, lifecycleObserver, block) {
     if (lifecycleObserver === void 0)
@@ -1066,23 +1059,6 @@ var kunafa = function (_, Kotlin) {
     kind: Kind_CLASS,
     simpleName: 'View',
     interfaces: [LifecycleOwner]
-  };
-  function AnchorLayout(parent) {
-    View.call(this, parent);
-  }
-  AnchorLayout.prototype.configureElement = function () {
-    View.prototype.configureElement.call(this);
-    this.element.style.display = 'inline-block';
-    this.element.style.position = 'relative';
-  };
-  AnchorLayout.prototype.mountChild_3bc3y1$ = function (child) {
-    child.element.style.position = 'absolute';
-    View.prototype.mountChild_3bc3y1$.call(this, child);
-  };
-  AnchorLayout.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'AnchorLayout',
-    interfaces: [View]
   };
   function LinearLayout(parent, initialOrientation) {
     LinearLayout$Companion_getInstance();
@@ -4275,7 +4251,7 @@ var kunafa = function (_, Kotlin) {
   };
   Route.prototype.setupRouterToCurrentRoute_0 = function () {
     var oldPath = Router_getInstance().currentPath;
-    Router_getInstance().currentPath = this.meta.url;
+    Router_getInstance().currentPath = this.meta.path;
     Router_getInstance().parentRoute = this;
     return oldPath;
   };
@@ -4473,8 +4449,8 @@ var kunafa = function (_, Kotlin) {
     simpleName: 'ParameterSegment',
     interfaces: [RouteSegment]
   };
-  function RouteMeta(url, params) {
-    this.url = url;
+  function RouteMeta(path, params) {
+    this.path = path;
     this.params = params;
   }
   RouteMeta.$metadata$ = {
@@ -4547,21 +4523,20 @@ var kunafa = function (_, Kotlin) {
   var package$core = package$kunafa.core || (package$kunafa.core = {});
   var package$components = package$core.components || (package$core.components = {});
   package$components.Anchor = Anchor;
-  package$components.ButtonView = ButtonView;
+  package$components.Button = Button;
   package$components.Checkbox = Checkbox;
   package$components.Component = Component;
   package$components.page_6bmerh$ = page;
   package$components.linearLayout_te8a6c$ = linearLayout;
   package$components.verticalLayout_te8a6c$ = verticalLayout;
   package$components.horizontalLayout_te8a6c$ = horizontalLayout;
-  package$components.horizontalScrollView_vjqw9z$ = horizontalScrollView;
-  package$components.verticalScrollView_vjqw9z$ = verticalScrollView;
-  package$components.anchorLayout_maugwk$ = anchorLayout;
+  package$components.horizontalScrollLayout_vjqw9z$ = horizontalScrollLayout;
+  package$components.verticalScrollLayout_vjqw9z$ = verticalScrollLayout;
   package$components.view_yfyifg$ = view;
   package$components.a_i4874s$ = a;
   package$components.textView_k17fs7$ = textView;
   package$components.textInput_b3mkdq$ = textInput;
-  package$components.button_4mjb1e$ = button;
+  package$components.button_f7h23d$ = button;
   package$components.imageView_6md8j5$ = imageView;
   package$components.checkbox_bq4xd6$ = checkbox;
   package$components.table_cspv33$ = table;
@@ -4608,8 +4583,6 @@ var kunafa = function (_, Kotlin) {
     get: View$Companion_getInstance
   });
   package$components.View = View;
-  var package$layout = package$components.layout || (package$components.layout = {});
-  package$layout.AnchorLayout = AnchorLayout;
   Object.defineProperty(LinearLayout$Orientation, 'Horizontal', {
     get: LinearLayout$Orientation$Horizontal_getInstance
   });
@@ -4620,6 +4593,7 @@ var kunafa = function (_, Kotlin) {
   Object.defineProperty(LinearLayout, 'Companion', {
     get: LinearLayout$Companion_getInstance
   });
+  var package$layout = package$components.layout || (package$components.layout = {});
   package$layout.LinearLayout = LinearLayout;
   Object.defineProperty(ScrollView, 'Companion', {
     get: ScrollView$Companion_getInstance
