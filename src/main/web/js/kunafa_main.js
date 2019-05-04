@@ -31,19 +31,20 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   var textInput = $module$kunafa.com.narbase.kunafa.core.components.textInput_b3mkdq$;
   var button = $module$kunafa.com.narbase.kunafa.core.components.button_f7h23d$;
   var verticalLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalLayout_te8a6c$;
+  var get_wrapContent = $module$kunafa.com.narbase.kunafa.core.dimensions.dependent.get_wrapContent_kn5s8$;
   var verticalScrollLayout = $module$kunafa.com.narbase.kunafa.core.components.verticalScrollLayout_vjqw9z$;
   var horizontalLayout = $module$kunafa.com.narbase.kunafa.core.components.horizontalLayout_te8a6c$;
   var Component = $module$kunafa.com.narbase.kunafa.core.components.Component;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var Observable = $module$kunafa.com.narbase.kunafa.core.lifecycle.Observable;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
-  var set_cursor = $module$kunafa.com.narbase.kunafa.core.css.set_cursor_la1i9z$;
-  var set_boxShadow = $module$kunafa.com.narbase.kunafa.core.css.set_boxShadow_la1i9z$;
-  var hover = $module$kunafa.com.narbase.kunafa.core.css.hover_ybuhke$;
   var view = $module$kunafa.com.narbase.kunafa.core.components.view_yfyifg$;
   var set_marginRight = $module$kunafa.com.narbase.kunafa.core.css.set_marginRight_9np42l$;
   var classRuleSet = $module$kunafa.com.narbase.kunafa.core.css.classRuleSet_mv4gp1$;
   var set_textDecoration = $module$kunafa.com.narbase.kunafa.core.css.set_textDecoration_la1i9z$;
+  var set_cursor = $module$kunafa.com.narbase.kunafa.core.css.set_cursor_la1i9z$;
+  var hover = $module$kunafa.com.narbase.kunafa.core.css.hover_ybuhke$;
+  var set_boxShadow = $module$kunafa.com.narbase.kunafa.core.css.set_boxShadow_la1i9z$;
   var JustifyContent = $module$kunafa.com.narbase.kunafa.core.css.JustifyContent;
   var set_justifyContent = $module$kunafa.com.narbase.kunafa.core.css.set_justifyContent_c3ey27$;
   var equals = Kotlin.equals;
@@ -74,7 +75,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     this.listLayout_0 = null;
     this.todoTextInput_0 = null;
   }
-  TodoComponent.prototype.onViewMounted_1xffwv$ = function (lifecycleOwner) {
+  TodoComponent.prototype.onViewCreated_1xffwv$ = function (lifecycleOwner) {
     this.viewModel_0.onItemAdded.observe_qlkmfe$(getCallableRef('addItem', function ($receiver, pm) {
       return $receiver.addItem_0(pm), Unit;
     }.bind(null, this)));
@@ -212,7 +213,7 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   }
   function TodoComponent$getView$lambda$lambda$lambda$lambda_4($receiver) {
     set_width($receiver, get_matchParent($receiver));
-    set_height($receiver, get_matchParent($receiver));
+    set_height($receiver, get_wrapContent($receiver));
     set_padding($receiver, get_px(8).toString());
     return Unit;
   }
@@ -377,87 +378,58 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   TodoPm.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.text, other.text) && Kotlin.equals(this.isDone, other.isDone)))));
   };
-  function TodoItem(todoPm, onDeleteClicked, onCheckboxClicked) {
+  function TodoItem(todoPm, onDeleteClicked, onToggleState) {
     TodoItem$Companion_getInstance();
     Component.call(this);
     this.todoPm_0 = todoPm;
     this.onDeleteClicked_0 = onDeleteClicked;
-    this.onCheckboxClicked_0 = onCheckboxClicked;
+    this.onToggleState_0 = onToggleState;
     this.checkboxView_0 = null;
     this.todoTextView_0 = null;
   }
-  function TodoItem$getView$lambda$lambda$lambda($receiver) {
-    set_boxShadow($receiver, '0px 4px 3px #bbb');
-    return Unit;
-  }
-  function TodoItem$getView$lambda$lambda($receiver) {
-    set_width($receiver, get_matchParent($receiver));
-    set_border($receiver, '1px solid #d4d4d4');
-    set_marginTop($receiver, get_px(8));
-    set_padding($receiver, get_px(8).toString());
-    set_alignItems($receiver, Alignment.Companion.Center);
-    set_cursor($receiver, 'pointer');
-    set_backgroundColor($receiver, Color.Companion.white);
-    hover($receiver, TodoItem$getView$lambda$lambda$lambda);
-    return Unit;
-  }
-  function TodoItem$getView$lambda$lambda_0(this$TodoItem) {
+  function TodoItem$getView$lambda$lambda(this$TodoItem) {
     return function (it) {
-      this$TodoItem.onCheckboxClicked_0(this$TodoItem.todoPm_0.id);
+      this$TodoItem.onToggleState_0(this$TodoItem.todoPm_0.id);
       return Unit;
     };
   }
-  function TodoItem$getView$lambda$lambda_1($receiver) {
+  function TodoItem$getView$lambda$lambda_0($receiver) {
     $receiver.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().circleBasic);
     return Unit;
   }
-  function TodoItem$getView$lambda$lambda$lambda_0($receiver) {
+  function TodoItem$getView$lambda$lambda$lambda($receiver) {
     set_width($receiver, weightOf($receiver, 1));
     set_fontSize($receiver, get_px(16));
     return Unit;
   }
-  function TodoItem$getView$lambda$lambda_2(this$TodoItem) {
+  function TodoItem$getView$lambda$lambda_1(this$TodoItem) {
     return function ($receiver) {
-      $receiver.style_cjs1gm$(TodoItem$getView$lambda$lambda$lambda_0);
+      $receiver.style_cjs1gm$(TodoItem$getView$lambda$lambda$lambda);
       $receiver.text = this$TodoItem.todoPm_0.text;
       return Unit;
     };
   }
-  function TodoItem$getView$lambda$lambda$lambda_1(this$TodoItem) {
+  function TodoItem$getView$lambda$lambda$lambda_0(this$TodoItem) {
     return function (it) {
       this$TodoItem.onDeleteClicked_0(this$TodoItem.todoPm_0.id);
       return Unit;
     };
   }
-  function TodoItem$getView$lambda$lambda$lambda$lambda($receiver) {
-    set_backgroundColor($receiver, Color_init(240, 40, 40));
-    return Unit;
-  }
-  function TodoItem$getView$lambda$lambda$lambda_2($receiver) {
-    set_borderRadius($receiver, get_px(4).toString());
-    set_backgroundColor($receiver, Color_init(230, 100, 100));
-    set_color($receiver, Color.Companion.white);
-    set_padding($receiver, get_px(4).toString());
-    set_border($receiver, 'none');
-    set_cursor($receiver, 'pointer');
-    hover($receiver, TodoItem$getView$lambda$lambda$lambda$lambda);
-    return Unit;
-  }
-  function TodoItem$getView$lambda$lambda_3(this$TodoItem) {
+  function TodoItem$getView$lambda$lambda_2(this$TodoItem) {
     return function ($receiver) {
       $receiver.text = 'Delete';
-      $receiver.onClick = TodoItem$getView$lambda$lambda$lambda_1(this$TodoItem);
-      $receiver.style_cjs1gm$(TodoItem$getView$lambda$lambda$lambda_2);
+      $receiver.onClick = TodoItem$getView$lambda$lambda$lambda_0(this$TodoItem);
+      $receiver.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().deleteButtonStyle);
       return Unit;
     };
   }
   function TodoItem$getView$lambda(this$TodoItem) {
     return function ($receiver) {
-      $receiver.style_cjs1gm$(TodoItem$getView$lambda$lambda);
-      $receiver.onClick = TodoItem$getView$lambda$lambda_0(this$TodoItem);
-      this$TodoItem.checkboxView_0 = view($receiver, void 0, TodoItem$getView$lambda$lambda_1);
-      this$TodoItem.todoTextView_0 = textView($receiver, void 0, TodoItem$getView$lambda$lambda_2(this$TodoItem));
-      button($receiver, void 0, TodoItem$getView$lambda$lambda_3(this$TodoItem));
+      $receiver.addRuleSet_mw7j13$(TodoItem$Companion$Style_getInstance().rootLayout);
+      $receiver.onClick = TodoItem$getView$lambda$lambda(this$TodoItem);
+      this$TodoItem.checkboxView_0 = view($receiver, void 0, TodoItem$getView$lambda$lambda_0);
+      this$TodoItem.todoTextView_0 = textView($receiver, void 0, TodoItem$getView$lambda$lambda_1(this$TodoItem));
+      button($receiver, void 0, TodoItem$getView$lambda$lambda_2(this$TodoItem));
       return Unit;
     };
   }
@@ -482,6 +454,8 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
     this.circleBasic = classRuleSet(void 0, TodoItem$Companion$Style$circleBasic$lambda);
     this.circleDone = classRuleSet(void 0, TodoItem$Companion$Style$circleDone$lambda);
     this.textDone = classRuleSet(void 0, TodoItem$Companion$Style$textDone$lambda);
+    this.deleteButtonStyle = classRuleSet(void 0, TodoItem$Companion$Style$deleteButtonStyle$lambda);
+    this.rootLayout = classRuleSet(void 0, TodoItem$Companion$Style$rootLayout$lambda);
   }
   function TodoItem$Companion$Style$circleBasic$lambda($receiver) {
     set_width($receiver, get_px(8));
@@ -499,6 +473,35 @@ var kunafa_main = function (_, Kotlin, $module$kunafa) {
   function TodoItem$Companion$Style$textDone$lambda($receiver) {
     set_textDecoration($receiver, 'line-through');
     set_color($receiver, Color_init_0('#ccc'));
+    return Unit;
+  }
+  function TodoItem$Companion$Style$deleteButtonStyle$lambda$lambda($receiver) {
+    set_backgroundColor($receiver, Color_init(240, 40, 40));
+    return Unit;
+  }
+  function TodoItem$Companion$Style$deleteButtonStyle$lambda($receiver) {
+    set_borderRadius($receiver, get_px(4).toString());
+    set_backgroundColor($receiver, Color_init(230, 100, 100));
+    set_color($receiver, Color.Companion.white);
+    set_padding($receiver, get_px(4).toString());
+    set_border($receiver, 'none');
+    set_cursor($receiver, 'pointer');
+    hover($receiver, TodoItem$Companion$Style$deleteButtonStyle$lambda$lambda);
+    return Unit;
+  }
+  function TodoItem$Companion$Style$rootLayout$lambda$lambda($receiver) {
+    set_boxShadow($receiver, '0px 4px 3px #bbb');
+    return Unit;
+  }
+  function TodoItem$Companion$Style$rootLayout$lambda($receiver) {
+    set_width($receiver, get_matchParent($receiver));
+    set_border($receiver, '1px solid #d4d4d4');
+    set_marginTop($receiver, get_px(8));
+    set_padding($receiver, get_px(8).toString());
+    set_alignItems($receiver, Alignment.Companion.Center);
+    set_cursor($receiver, 'pointer');
+    set_backgroundColor($receiver, Color.Companion.white);
+    hover($receiver, TodoItem$Companion$Style$rootLayout$lambda$lambda);
     return Unit;
   }
   TodoItem$Companion$Style.$metadata$ = {

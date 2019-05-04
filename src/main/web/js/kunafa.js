@@ -201,29 +201,24 @@ var kunafa = function (_, Kotlin) {
   function Component() {
     this.view_6apaz4$_0 = null;
   }
+  function Component$get_Component$initializedView$lambda(this$Component) {
+    return function ($receiver) {
+      return this$Component.getView_art3zr$($receiver);
+    };
+  }
   Object.defineProperty(Component.prototype, 'initializedView_jtp5wa$_0', {
     get: function () {
       var tmp$;
-      var tmp$_0;
-      if ((tmp$ = this.view_6apaz4$_0) != null)
-        tmp$_0 = tmp$;
-      else {
-        var $receiver = this.getView_art3zr$(detached);
-        $receiver.bind_c4619k$(this);
-        tmp$_0 = $receiver;
-      }
-      var notNullView = tmp$_0;
-      if (this.view_6apaz4$_0 == null) {
-        this.view_6apaz4$_0 = notNullView;
-      }
+      var notNullView = (tmp$ = this.view_6apaz4$_0) != null ? tmp$ : createView(this, Component$get_Component$initializedView$lambda(this));
+      this.view_6apaz4$_0 = notNullView;
       return notNullView;
     }
   });
   Component.prototype.addToParent_vqbcdi$ = function (parent) {
-    parent != null ? (parent.addChild_3bc3y1$(this.initializedView_jtp5wa$_0), Unit) : null;
+    parent != null ? (parent.mount_3bc3y1$(this.initializedView_jtp5wa$_0), Unit) : null;
   };
   Component.prototype.addToParentAfter_qrl6q5$ = function (parent, referenceView) {
-    parent != null ? (parent.addChildAfter_libcmy$(this.initializedView_jtp5wa$_0, referenceView), Unit) : null;
+    parent != null ? (parent.mountAfter_libcmy$(this.initializedView_jtp5wa$_0, referenceView), Unit) : null;
   };
   Component.prototype.removeFromParent_vqbcdi$ = function (parent) {
     var tmp$;
@@ -481,11 +476,21 @@ var kunafa = function (_, Kotlin) {
     Page_instance = this;
     View.call(this, null);
   }
-  Page.prototype.mountChild_3bc3y1$ = function (child) {
+  Page.prototype.mount_3bc3y1$ = function (child) {
     var tmp$;
+    child.postViewWillMount_8be2vx$();
     child.parent = this;
     (tmp$ = document.body) != null ? (tmp$.append(child.element), Unit) : null;
     this.children.add_11rb$(child);
+    child.postOnViewMounted_8be2vx$();
+  };
+  Page.prototype.mountAfter_libcmy$ = function (child, referenceNode) {
+    var tmp$;
+    child.postViewWillMount_8be2vx$();
+    (tmp$ = document.body) != null ? tmp$.insertBefore(child.element, referenceNode.element.nextSibling) : null;
+    child.parent = this;
+    this.children.add_11rb$(child);
+    child.postOnViewMounted_8be2vx$();
   };
   Page.prototype.removeChild_3bc3y1$ = function (child) {
     var tmp$;
@@ -841,7 +846,6 @@ var kunafa = function (_, Kotlin) {
     var tmp$;
     this.element_5m5ez7$_0 = Kotlin.isType(tmp$ = document.createElement('div'), HTMLDivElement) ? tmp$ : throwCCE();
     this.lifecycleObserversList_vi34z0$_0 = ArrayList_init();
-    this.lastLifecycleEvent_308r9b$_0 = null;
     this.isVisible_1i09yf$_0 = true;
     this.children = ArrayList_init();
   }
@@ -860,16 +864,15 @@ var kunafa = function (_, Kotlin) {
       return this.element_5m5ez7$_0;
     }
   });
-  Object.defineProperty(View.prototype, 'lastLifecycleEvent', {
-    get: function () {
-      return this.lastLifecycleEvent_308r9b$_0;
-    },
-    set: function (lastLifecycleEvent) {
-      this.lastLifecycleEvent_308r9b$_0 = lastLifecycleEvent;
+  View.prototype.postOnViewCreated_8be2vx$ = function () {
+    var tmp$;
+    tmp$ = this.lifecycleObserversList_vi34z0$_0.iterator();
+    while (tmp$.hasNext()) {
+      var element = tmp$.next();
+      element.onViewCreated_1xffwv$(this);
     }
-  });
+  };
   View.prototype.postViewWillMount_8be2vx$ = function () {
-    this.lastLifecycleEvent = LifecycleEvent$ViewWillMount_getInstance();
     var tmp$;
     tmp$ = this.lifecycleObserversList_vi34z0$_0.iterator();
     while (tmp$.hasNext()) {
@@ -878,7 +881,6 @@ var kunafa = function (_, Kotlin) {
     }
   };
   View.prototype.postOnViewMounted_8be2vx$ = function () {
-    this.lastLifecycleEvent = LifecycleEvent$ViewMounted_getInstance();
     var tmp$;
     tmp$ = this.lifecycleObserversList_vi34z0$_0.iterator();
     while (tmp$.hasNext()) {
@@ -888,12 +890,17 @@ var kunafa = function (_, Kotlin) {
   };
   View.prototype.postViewWillBeRemoved_inoweh$_0 = function () {
     var tmp$;
-    tmp$ = this.children.iterator();
+    tmp$ = this.lifecycleObserversList_vi34z0$_0.iterator();
     while (tmp$.hasNext()) {
       var element = tmp$.next();
-      element.postViewWillBeRemoved_inoweh$_0();
+      element.viewWillBeRemoved_1xffwv$(this);
     }
-    this.lastLifecycleEvent = LifecycleEvent$ViewWillBeRemoved_getInstance();
+    var tmp$_0;
+    tmp$_0 = this.children.iterator();
+    while (tmp$_0.hasNext()) {
+      var element_0 = tmp$_0.next();
+      element_0.postViewWillBeRemoved_inoweh$_0();
+    }
   };
   View.prototype.postOnViewRemoved_f95o3$_0 = function () {
     var tmp$;
@@ -902,7 +909,12 @@ var kunafa = function (_, Kotlin) {
       var element = tmp$.next();
       element.postOnViewRemoved_f95o3$_0();
     }
-    this.lastLifecycleEvent = LifecycleEvent$ViewRemoved_getInstance();
+    var tmp$_0;
+    tmp$_0 = this.lifecycleObserversList_vi34z0$_0.iterator();
+    while (tmp$_0.hasNext()) {
+      var element_0 = tmp$_0.next();
+      element_0.onViewRemoved_1xffwv$(this);
+    }
   };
   View.prototype.bind_c4619k$ = function (lifecycleObserver) {
     if (this.lifecycleObserversList_vi34z0$_0.contains_11rb$(lifecycleObserver)) {
@@ -986,29 +998,23 @@ var kunafa = function (_, Kotlin) {
       return (tmp$ = this.parent) != null ? tmp$.path : null;
     }
   });
-  View.prototype.addChild_3bc3y1$ = function (child) {
-    child.postViewWillMount_8be2vx$();
-    this.mountChild_3bc3y1$(child);
-    child.postOnViewMounted_8be2vx$();
-  };
-  View.prototype.addChildAfter_libcmy$ = function (child, referenceNode) {
-    child.postViewWillMount_8be2vx$();
-    this.mountChildAfter_libcmy$(child, referenceNode);
-    child.postOnViewMounted_8be2vx$();
-  };
   View.prototype.addToParent = function () {
     var tmp$;
-    (tmp$ = this.parent) != null ? (tmp$.mountChild_3bc3y1$(this), Unit) : null;
+    (tmp$ = this.parent) != null ? (tmp$.mount_3bc3y1$(this), Unit) : null;
   };
-  View.prototype.mountChild_3bc3y1$ = function (child) {
+  View.prototype.mount_3bc3y1$ = function (child) {
+    child.postViewWillMount_8be2vx$();
     this.element.append(child.element);
     child.parent = this;
     this.children.add_11rb$(child);
+    child.postOnViewMounted_8be2vx$();
   };
-  View.prototype.mountChildAfter_libcmy$ = function (child, referenceNode) {
+  View.prototype.mountAfter_libcmy$ = function (child, referenceNode) {
+    child.postViewWillMount_8be2vx$();
     this.element.insertBefore(child.element, referenceNode.element.nextSibling);
     child.parent = this;
     this.children.add_11rb$(child);
+    child.postOnViewMounted_8be2vx$();
   };
   View.prototype.removeChild_3bc3y1$ = function (child) {
     if (!this.children.contains_11rb$(child)) {
@@ -1203,12 +1209,17 @@ var kunafa = function (_, Kotlin) {
     if (lifecycleObserver != null) {
       $receiver.bind_c4619k$(lifecycleObserver);
     }
-    $receiver.postViewWillMount_8be2vx$();
     $receiver.configureElement();
     setup($receiver);
+    $receiver.postOnViewCreated_8be2vx$();
     $receiver.addToParent();
-    $receiver.postOnViewMounted_8be2vx$();
     return $receiver;
+  }
+  function createView($receiver, setup) {
+    var view = setup(detached);
+    view.bind_c4619k$($receiver);
+    view.postOnViewCreated_8be2vx$();
+    return view;
   }
   function ClassNameGenerator() {
     ClassNameGenerator_instance = this;
@@ -4150,6 +4161,8 @@ var kunafa = function (_, Kotlin) {
   LifecycleEvent.valueOf_61zpoe$ = LifecycleEvent$valueOf;
   function LifecycleObserver() {
   }
+  LifecycleObserver.prototype.onViewCreated_1xffwv$ = function (lifecycleOwner) {
+  };
   LifecycleObserver.prototype.viewWillMount_1xffwv$ = function (lifecycleOwner) {
   };
   LifecycleObserver.prototype.onViewMounted_1xffwv$ = function (lifecycleOwner) {
@@ -4204,6 +4217,10 @@ var kunafa = function (_, Kotlin) {
         throw ConcurrentModificationException_init();
     }
     observer(this.value);
+  };
+  Observable.prototype.clearObservers = function () {
+    var tmp$;
+    (tmp$ = this.observers_0) != null ? (tmp$.clear(), Unit) : null;
   };
   Observable.$metadata$ = {
     kind: Kind_CLASS,
@@ -4600,6 +4617,7 @@ var kunafa = function (_, Kotlin) {
   });
   package$layout.ScrollView = ScrollView;
   package$components.visit_kkf9ko$ = visit;
+  package$components.createView_85mg5v$ = createView;
   var package$css = package$core.css || (package$core.css = {});
   Object.defineProperty(package$css, 'ClassNameGenerator', {
     get: ClassNameGenerator_getInstance
@@ -5246,6 +5264,7 @@ var kunafa = function (_, Kotlin) {
   Object.defineProperty(package$routing, 'Router', {
     get: Router_getInstance
   });
+  Component.prototype.onViewCreated_1xffwv$ = LifecycleObserver.prototype.onViewCreated_1xffwv$;
   Component.prototype.viewWillMount_1xffwv$ = LifecycleObserver.prototype.viewWillMount_1xffwv$;
   Component.prototype.onViewMounted_1xffwv$ = LifecycleObserver.prototype.onViewMounted_1xffwv$;
   Component.prototype.viewWillBeRemoved_1xffwv$ = LifecycleObserver.prototype.viewWillBeRemoved_1xffwv$;

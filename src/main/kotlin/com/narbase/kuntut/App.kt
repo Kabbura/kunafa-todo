@@ -5,6 +5,7 @@ import com.narbase.kunafa.core.components.layout.LinearLayout
 import com.narbase.kunafa.core.css.*
 import com.narbase.kunafa.core.dimensions.dependent.matchParent
 import com.narbase.kunafa.core.dimensions.dependent.weightOf
+import com.narbase.kunafa.core.dimensions.dependent.wrapContent
 import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
@@ -34,7 +35,7 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
     private var todoTextInput: TextInput? = null
 
 
-    override fun onViewMounted(lifecycleOwner: LifecycleOwner) {
+    override fun onViewCreated(lifecycleOwner: LifecycleOwner) {
         viewModel.onItemAdded.observe(::addItem)
         viewModel.onItemDeleted.observe(::deleteItem)
         viewModel.onItemUpdated.observe(::updateItem)
@@ -125,7 +126,7 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
             listLayout = verticalLayout {
                 style {
                     width = matchParent
-                    height = matchParent
+                    height = wrapContent
                     padding = 8.px.toString()
                 }
             }
