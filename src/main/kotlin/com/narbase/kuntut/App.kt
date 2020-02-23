@@ -21,7 +21,7 @@ import org.w3c.dom.events.KeyboardEvent
  * On: 2019/03/05.
  */
 
-fun main(args: Array<String>) {
+fun main() {
     page {
         mount(TodoComponent(TodoViewModel()))
     }
@@ -77,7 +77,7 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
                 minWidth = 200.px
                 height = matchParent
                 backgroundColor = Color.white
-                padding = 32.px.toString()
+                padding = 32.px
                 alignItems = Alignment.Center
             }
 
@@ -94,8 +94,8 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
                     width = matchParent
                     backgroundColor = Color("#fafafa")
                     border = "1px solid #efefef"
-                    padding = 8.px.toString()
-                    borderRadius = 4.px.toString()
+                    padding = 8.px
+                    borderRadius = 4.px
                     marginTop = 16.px
                 }
                 element.addEventListener("keypress", { e ->
@@ -127,7 +127,7 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
                 style {
                     width = matchParent
                     height = wrapContent
-                    padding = 8.px.toString()
+                    padding = 8.px
                 }
             }
         }
@@ -219,7 +219,7 @@ class TodoItem(
             val circleBasic = classRuleSet {
                 width = 8.px
                 height = 8.px
-                borderRadius = 8.px.toString()
+                borderRadius = 8.px
                 border = "1px solid #888"
                 marginRight = 8.px
             }
@@ -232,10 +232,10 @@ class TodoItem(
                 color = Color("#ccc")
             }
             val deleteButtonStyle = classRuleSet {
-                borderRadius = 4.px.toString()
+                borderRadius = 4.px
                 backgroundColor = Color(230, 100, 100)
                 color = Color.white
-                padding = 4.px.toString()
+                padding = 4.px
                 border = "none"
                 cursor = "pointer"
                 hover {
@@ -246,7 +246,7 @@ class TodoItem(
                 width = matchParent
                 border = "1px solid #d4d4d4"
                 marginTop = 8.px
-                padding = 8.px.toString()
+                padding = 8.px
                 alignItems = Alignment.Center
                 cursor = "pointer"
                 backgroundColor = Color.white
