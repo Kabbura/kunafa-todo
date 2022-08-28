@@ -24,15 +24,13 @@ import org.w3c.dom.events.KeyboardEvent
 
 fun main() {
     page {
-        prepareWebAppPage()
+        style {
+            height = matchParent
+            width = matchParent
+            position = "fixed"
+        }
         mount(TodoComponent(TodoViewModel()))
     }
-}
-
-fun prepareWebAppPage() {
-    document.body?.style?.height = "100%"
-    document.body?.style?.width = "100%"
-    document.body?.style?.position = "fixed"
 }
 
 class TodoComponent(private val viewModel: TodoViewModel) : Component() {
