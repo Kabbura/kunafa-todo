@@ -10,6 +10,7 @@ import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import com.narbase.kunafa.core.lifecycle.Observable
+import kotlinx.browser.document
 import org.w3c.dom.events.KeyboardEvent
 
 /**
@@ -23,8 +24,15 @@ import org.w3c.dom.events.KeyboardEvent
 
 fun main() {
     page {
+        prepareWebAppPage()
         mount(TodoComponent(TodoViewModel()))
     }
+}
+
+fun prepareWebAppPage() {
+    document.body?.style?.height = "100%"
+    document.body?.style?.width = "100%"
+    document.body?.style?.position = "fixed"
 }
 
 class TodoComponent(private val viewModel: TodoViewModel) : Component() {
