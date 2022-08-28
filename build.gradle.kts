@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.narbase.kunafa:core:0.3.0-beta.7")
+    implementation("com.narbase.kunafa:core:0.3.0")
 }
 
 
