@@ -261,10 +261,16 @@ class TodoItem(
                 hover {
                     boxShadow = "0px 4px 3px #bbb"
                 }
+                simpleRipple()
             }
         }
     }
 }
 
 
-
+fun RuleSet.simpleRipple() {
+    transition = "opacity 0s"
+    active {
+        opacity = 0.5
+    }
+}
