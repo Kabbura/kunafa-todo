@@ -10,12 +10,13 @@ import com.narbase.kunafa.core.dimensions.px
 import com.narbase.kunafa.core.drawable.Color
 import com.narbase.kunafa.core.lifecycle.LifecycleOwner
 import com.narbase.kunafa.core.lifecycle.Observable
+import kotlinx.browser.document
 import org.w3c.dom.events.KeyboardEvent
 
 /**
  * NARBASE TECHNOLOGIES CONFIDENTIAL
  * ______________________________
- * [2017] -[2019] Narbase Technologies
+ * [2017] - [2022] Narbase Technologies
  * All Rights Reserved.
  * Created by islam
  * On: 2019/03/05.
@@ -23,6 +24,11 @@ import org.w3c.dom.events.KeyboardEvent
 
 fun main() {
     page {
+        style {
+            height = matchParent
+            width = matchParent
+            position = "fixed"
+        }
         mount(TodoComponent(TodoViewModel()))
     }
 }
@@ -41,24 +47,24 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
         viewModel.onItemUpdated.observe(::updateItem)
     }
 
-    private fun addItem(pm: TodoPm?) {
-        pm ?: return
-        val component = TodoItem(pm, viewModel::deleteItem, viewModel::toggleItemStatus)
+    private fun addItem(ds: TodoDs?) {
+        ds ?: return
+        val component = TodoItem(ds, viewModel::deleteItem, viewModel::toggleItemStatus)
         listLayout?.mount(component)
-        todoViews[pm.id] = component
+        todoViews[ds.id] = component
     }
 
-    private fun deleteItem(pm: TodoPm?) {
-        pm ?: return
-        val component = todoViews[pm.id] ?: return
+    private fun deleteItem(ds: TodoDs?) {
+        ds ?: return
+        val component = todoViews[ds.id] ?: return
         listLayout?.unMount(component)
-        todoViews.remove(pm.id)
+        todoViews.remove(ds.id)
     }
 
-    private fun updateItem(pm: TodoPm?) {
-        pm ?: return
-        val component = todoViews[pm.id] ?: return
-        if (pm.isDone) {
+    private fun updateItem(ds: TodoDs?) {
+        ds ?: return
+        val component = todoViews[ds.id] ?: return
+        if (ds.isDone) {
             component.markDone()
         } else {
             component.markUndone()
@@ -140,17 +146,17 @@ class TodoComponent(private val viewModel: TodoViewModel) : Component() {
 }
 
 class TodoViewModel {
-    val onItemAdded = Observable<TodoPm>()
-    val onItemDeleted = Observable<TodoPm>()
-    val onItemUpdated = Observable<TodoPm>()
+    val onItemAdded = Observable<TodoDs>()
+    val onItemDeleted = Observable<TodoDs>()
+    val onItemUpdated = Observable<TodoDs>()
 
-    private val todoItemsList = mutableListOf<TodoPm>()
+    private val todoItemsList = mutableListOf<TodoDs>()
 
     fun addNewTodo(todoText: String?) {
         if (todoText.isNullOrBlank()) return
-        val pm = TodoPm(todoText)
-        todoItemsList.add(pm)
-        onItemAdded.value = pm
+        val ds = TodoDs(todoText)
+        todoItemsList.add(ds)
+        onItemAdded.value = ds
     }
 
     fun deleteItem(id: Int) {
@@ -166,7 +172,7 @@ class TodoViewModel {
     }
 }
 
-data class TodoPm(val text: String, var isDone: Boolean = false) {
+data class TodoDs(val text: String, var isDone: Boolean = false) {
     val id: Int = nextId
 
     companion object {
@@ -176,7 +182,7 @@ data class TodoPm(val text: String, var isDone: Boolean = false) {
 }
 
 class TodoItem(
-    private val todoPm: TodoPm,
+    private val todoDs: TodoDs,
     private val onDeleteClicked: (id: Int) -> Unit,
     private val onToggleState: (id: Int) -> Unit
 ) : Component() {
@@ -185,7 +191,7 @@ class TodoItem(
     private var todoTextView: TextView? = null
     override fun View?.getView() = horizontalLayout {
         addRuleSet(Style.rootLayout)
-        onClick = { onToggleState(todoPm.id) }
+        onClick = { onToggleState(todoDs.id) }
 
         checkboxView = view {
             addRuleSet(Style.circleBasic)
@@ -195,11 +201,11 @@ class TodoItem(
                 width = weightOf(1)
                 fontSize = 16.px
             }
-            text = todoPm.text
+            text = todoDs.text
         }
         button {
             text = "Delete"
-            onClick = { onDeleteClicked(todoPm.id) }
+            onClick = { onDeleteClicked(todoDs.id) }
             addRuleSet(Style.deleteButtonStyle)
         }
     }
@@ -253,10 +259,16 @@ class TodoItem(
                 hover {
                     boxShadow = "0px 4px 3px #bbb"
                 }
+                simpleRipple()
             }
         }
     }
 }
 
 
-
+fun RuleSet.simpleRipple() {
+    transition = "opacity 0s"
+    active {
+        opacity = 0.5
+    }
+}
